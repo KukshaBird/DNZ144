@@ -1,0 +1,15 @@
+{% extends 'services/base.html' %}
+{% load static %}
+
+{% block spec_block %}
+<h2>Открытые вопросы</h2>
+<div>
+	{% for issue in issuesmodel_list %}
+		<p>{{ issue.name }}</p>
+		<p>{{ issue.description }}</p>
+	{% endfor %}
+</div>
+
+
+
+{% endblock %}

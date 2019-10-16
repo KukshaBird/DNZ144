@@ -1,0 +1,12 @@
+{% extends 'services/base.html' %}
+
+
+{% block spec_block %}
+<h2>Опросы</h2>
+<div>
+	{% for poll in poll_list %}
+		<a href="{% url 'services:poll:poll_view' poll_id=poll.id %}"><p>{{ poll.question }}</p></a>
+	{% endfor %}
+</div>
+
+{% endblock %}
