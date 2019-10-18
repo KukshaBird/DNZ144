@@ -14,3 +14,4 @@ class PollsViewList(ListView):
 	model = Poll
 	template_name = 'services/polls_list.html'
 
+

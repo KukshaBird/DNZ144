@@ -1,4 +1,6 @@
 from django.db import models
+from django.forms import ModelForm
+from django.contrib.auth.models import User
 
 class IssuesModel(models.Model):
 	name = models.CharField(max_length=155)
@@ -7,3 +9,11 @@ class IssuesModel(models.Model):
 
 	def __str__(self):
 		return self.name
+
+
+class UserForm(ModelForm):
+
+	class Meta:
+		model = User
+		fields = ['username', 'password']
+		

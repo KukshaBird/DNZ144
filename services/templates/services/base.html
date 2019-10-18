@@ -3,10 +3,8 @@
 {% block content_block %}
 <nav>
 	<ul class="nav nav-pills nav-fill">
-		<a class="nav-item nav-link active" href="{% url 'services:issues' %}">Открытые вопросы</a>
+		<a class="nav-item nav-link" href="{% url 'services:issues' %}">Открытые вопросы</a>
 		<a class="nav-item nav-link" href="{% url 'services:polls_list' %}">Голосования</a>
-		<a class="nav-item nav-link" href="">Процессы</a>
-		<a class="nav-item nav-link" href="">Пожелания</a>
 	</ul>
 </nav>
 {% block spec_block %}{% endblock %}

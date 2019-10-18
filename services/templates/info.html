@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content_block %}
+	<nav>
+	<ul class="nav nav-pills nav-fill">
+		<a class="nav-item nav-link" href="{% url 'schedule' %}">Рассписание</a>
+		<a class="nav-item nav-link" href="{% url 'staff' %}">Персонал</a>
+	</ul>
+</nav>
+	{% block info_block %}{% endblock %}
+{% endblock %}
