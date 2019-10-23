@@ -4,11 +4,11 @@
 
 {% block content_block %}
 <div class="container">
-    <h1>Регистрация</h1>
+    <h1>Авторизация</h1>
     <form method="POST">
         {% csrf_token %}
         {{ form|crispy }}
-        <input type="submit" value="Зарегестрироваться" class="btn btn-success">
+        <input type="submit" value="Авторизироваться" class="btn btn-success">
     </form>
 </div>
 {% endblock %}

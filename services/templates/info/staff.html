@@ -1,19 +1,17 @@
 {% extends 'info.html' %}
 
 {% block info_block %}
-	<p>Персонал</p>
 	<table>
 		<tr>
-			<td>Должность</td>
-			<td>Телефон</td>
+			<td>{{"имя"|upper}}</td>
+			<td>{{"телефон"|upper}}</td>
 		</tr>
+	
+	{% for staff in staff_list %}
 		<tr>
-			<td>Саша</td>
-			<td>0665235645</td>
+			<td>{{ staff.first_name }}</td>
+			<td>{{ staff.phone }}</td>
 		</tr>
-		<tr>
-			<td>Вера</td>
-			<td>0996524512</td>
-		</tr>
+	{% endfor %}
 	</table>
 {% endblock %}

@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content_block %}
-	<p>Приветственная информация!</p>
+<div class="container">
+	<div class="jumbotron">
+		<h2>Добро пожаловать на неофициальный сайт ДНЗ 144</h2>
+		<p>{{ text|linebreaks }}</p>		
+	</div>	
+</div>
 {% endblock %}

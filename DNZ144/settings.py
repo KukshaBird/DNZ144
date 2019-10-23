@@ -37,10 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'services',
     'poll',
     'group',
     'accounts',
+    'news',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +127,12 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'DNZ144/static')
 
 LOGIN_REDIRECT_URL = '/'
+AUTH_USER_MODEL = 'accounts.ApiUser'
+
+#MAILING
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'subslavyan01@gmail.com'
+EMAIL_HOST_PASSWORD = 'XZxz1112220'
+EMAIL_PORT = 587

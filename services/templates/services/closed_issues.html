@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block spec_block %}
-<h2>Открытые вопросы</h2>
+<h2>Закрытые вопросы</h2>
 <div>
 	{% if issuesmodel_list %}
 	{% for issue in issuesmodel_list %}
@@ -10,7 +10,7 @@
 		<p>{{ issue.description }}</p>
 	{% endfor %}
 	{% else %}
-		<p>Открытых вопросов доступных вашей учетной записи не найдено.</p>
+		<p>Зактырых вопросов доступных вашей учетной записи не найдено.</p>
 		<p>Возможно, вы забыли <a href="{% url 'login' %}">зайти в учетную запись</a>.</p>
 	{% endif %}
 </div>

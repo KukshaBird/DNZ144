@@ -4,9 +4,14 @@
 {% block spec_block %}
 <h2>Опросы</h2>
 <div>
+	{% if poll_list %}
 	{% for poll in poll_list %}
 		<a href="{% url 'services:poll:poll_view' poll_id=poll.id %}"><p>{{ poll.question }}</p></a>
 	{% endfor %}
+	{% else %}
+		<p>Опросов доступных вашей учетной записи не найдено.</p>
+		<p>Возможно, вы забыли <a href="{% url 'login' %}">зайти в учетную запись</a>.</p>
+	{% endif %}
 </div>
 
 {% endblock %}
