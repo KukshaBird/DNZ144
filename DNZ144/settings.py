@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'group',
     'accounts',
     'news',
+    'accounting',
 ]
 
 MIDDLEWARE = [

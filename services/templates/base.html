@@ -29,6 +29,9 @@
 				<a class="nav-link" href="{% url 'home' %}"><li class="nav-item">Главная</li></a>
 				<a class="nav-link" href="{% url 'services:services_main' %}"><li class="nav-item">Сервисы</li></a>
 				<a class="nav-link" href="{% url 'info' %}"><li class="nav-item">Информация</li></a>
+				{% if user.is_authenticated %}
+				<a class="nav-link" href="{% url 'accounting:test' %}"><li class="nav-item">Бухгалтерия</li></a>
+				{% endif %}
 				<a class="nav-link" href="{% url 'contacts' %}"><li class="nav-item">Контакты</li></a>
 			</ul>
 		</nav>

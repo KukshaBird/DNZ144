@@ -1,9 +1,8 @@
 from django.contrib.auth import login, logout
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, UpdateView
 from django.http import HttpResponseRedirect
 from django.contrib.auth.views import LoginView
-# from django.conf import settings
 
 from . import forms
 
@@ -35,3 +34,8 @@ def logout_view(request):
 class UserLoginView(LoginView):
     authentication_form = forms.UserLoginForm
     template_name = "accounts/login.html"
+
+class ProfileUpdateView(UpdateView):
+    model = models.Profile
+    fields = ['phone']
+    template_name = 'accounts/update.html'
