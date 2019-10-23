@@ -6,7 +6,7 @@ var vote_url = "{% url 'services:poll:vote' poll.pk %}";
 var result_url = "{% url 'services:poll:result' poll.pk %}";
 document.addEventListener('DOMContentLoaded', function(){
     function showResults() {
-        $.get(result_url, function(data) {
+        jQuery.get(result_url, function(data) {
             $("#poll_container").html(data);
         });
     }
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function(){
             alert("Please,choose  an answer'");
             return false;
         }
-        $.get(vote_url, {item: item}, function() {
+        jQuery.get(vote_url, {item: item}, function() {
             showResults();
         });
         return false;

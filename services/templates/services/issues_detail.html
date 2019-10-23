@@ -1,0 +1,21 @@
+{% extends 'services/base.html' %}
+{% load static %}
+
+{% block spec_block %}
+	<div class="issue border border-info">
+	<h4>{{ issuesmodel.title }}</h4>
+	<p>{{ issuesmodel.description|linebreaksbr }}{% lorem 200 w %}</p>
+	<a href="{% url 'services:comment_create' %}"><p class="btn btn-primary">Комментировать</p></a>		
+	</div>
+	<div class="comments">		
+		{% if issuesmodel.issue_comments %}
+			{% for comment in issuesmodel.issue_comments.all %}
+			<div class="border border-info rounded-top">
+				<p>{{ comment.author }}</p>
+				<p>{{ comment.text }}</p>
+				<p>{{ comment.created_date }}</p>				
+			</div>
+			{% endfor %}
+		{% endif %}
+	</div>
+{% endblock %}

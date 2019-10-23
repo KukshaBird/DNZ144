@@ -1,6 +1,7 @@
 {% extends 'info.html' %}
 
-{{ request.user.get_group_list }}
+
+{% block info_block %}
 	<p>Расписания</p>
 	<p>Режим роботи: з 7.00 до 19.00.</p>
 	<h4>Режим дня</h4>

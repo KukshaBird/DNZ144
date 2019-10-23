@@ -3,14 +3,17 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView
 from django.http import HttpResponseRedirect
 from django.contrib.auth.views import LoginView
-from django.conf import settings
+# from django.conf import settings
 
 from . import forms
 
+from . import models
+
 
 class AccountDetailView(DetailView):
-	model = settings.AUTH_USER_MODEL
-	template_name = 'accounts/profile.html'
+    # model = settings.AUTH_USER_MODEL
+    model = models.ApiUser
+    template_name = 'accounts/profile.html'
 
 class SignUp(CreateView):
     form_class = forms.UserCreateForm

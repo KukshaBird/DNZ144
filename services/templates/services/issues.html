@@ -3,11 +3,20 @@
 
 {% block spec_block %}
 <h2>Открытые вопросы</h2>
+{% if user.is_authenticated %}
+<a href="{% url 'services:issues_create' %}"><p class="btn btn-primary">Открыть новый вопрос</p></a>
+{% endif %}
 <div>
 	{% if issuesmodel_list %}
 	{% for issue in issuesmodel_list %}
-		<h3>{{ issue.title }}</h3>
-		<p>{{ issue.description }}</p>
+		<div class="border border-info rounded-top">
+			<h4>
+				<a href="{% url 'services:issues_detail' pk=issue.pk %}">{{ issue.title|upper }}</a>
+			</h4>
+			<p>{{ issue.description|truncatechars:200 }}</p>
+			<p>{{ issue.author }}</p>
+			<p>{{ issue.created_date }}</p>
+		</div>
 	{% endfor %}
 	{% else %}
 		<p>Открытых вопросов доступных вашей учетной записи не найдено.</p>
