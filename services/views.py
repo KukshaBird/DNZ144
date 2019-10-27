@@ -5,9 +5,12 @@ from django.urls import reverse_lazy
 
 from .models import IssuesModel, Comment
 from poll.models import Poll
+from group.models import Group
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
+
+from .forms import IssuesCreateForm
 
 class MainView(TemplateView):
 	template_name = 'services/base.html'
@@ -46,9 +49,15 @@ class DetailIssuesView(DetailView):
 
 class CreateIssuesView(LoginRequiredMixin, CreateView):
 	model = IssuesModel
+	form_class = IssuesCreateForm
 	template_name = 'services/issues_create.html'
-	fields = ['title', 'description', 'access_to']
 	success_url = reverse_lazy('services:issues')
+
+	def form_valid(self, form):
+		form.instance.author = self.request.user
+		form.instance.save()
+		form.instance.access_to.set(self.request.POST.get("access_to"))
+		return super().form_valid(form)
 
 class CreateCommentView(LoginRequiredMixin, CreateView):
 	model = Comment
@@ -62,14 +71,13 @@ class PollsViewList(ListView):
 
 	def get_queryset(self):
 		if self.request.user.is_authenticated:
-			if User.objects.get(id=self.request.user.id).kids.exists():
-				queryset = Poll.objects.filter(
-						group_polls__exact=User.objects.get(
-							id=self.request.user.id
-						).kids.first().groups.first()
-					)
-				return queryset
-			else:
-				return False
+			queryset = Poll.objects.filter(group_polls__exact=self.request.user.get_group_list()[0].id)
+			return queryset
 		else:
 			return False
+
+class CreatePollView(LoginRequiredMixin, CreateView):
+	model = Poll
+	template_name = 'poll/polls_create.html'
+	fields = ['question']
+	success_url = reverse_lazy('services:polls_list')

@@ -22,5 +22,5 @@ def schedule_view(request):
 	return render(request, 'info/schedule.html')
 
 def staff_view(request):
-	staff_list = Staff.objects.all()
+	staff_list = Staff.objects.filter(group__in=request.user.get_group_list())
 	return render(request, 'info/staff.html',context={'staff_list': staff_list})

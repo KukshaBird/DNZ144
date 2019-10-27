@@ -1,9 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Accounting</title>
-</head>
-<body>
-	<h1>Hello</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content_block %}
+	<h1>Бухгалтерия</h1>
+	<h4>Total summ: All kasses.</h4>
+	{% block accounting_block %}
+		<h3>Фонд: {{ kassa.name }}</h3>
+		<p>Карта пополнения фонда: {{ kassa.card }}</p>
+		<p>Общие доходы: {{ kassa.get_deb_sum }}</p>
+		<p>Общие расходы: {{ kassa.get_cre_sum }}</p>
+		<p>Остаток: {{ kassa.get_saldo }}</p>
+		<p>Оплатило: {{ kassa.operations.count }}/{{ kassa.group.kids.all.count }}</p>
+		<p>Последние данные были внесены: {{ kassa.operations.last.create_date|date:"d M Y" }}</p>
+		{% if user.kids.first.id in kassa.user_paid %}
+		<p>Оплачено от ребенка: {{ user.kids.first.last_name }}</p>
+		{% else %}
+		<p>Не оплачено от ребенка: {{ user.kids.first.last_name }}</p>
+		{% endif %}
+	{% endblock %}
+
+{% endblock %}

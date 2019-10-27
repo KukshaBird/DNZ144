@@ -2,6 +2,7 @@
 
 {% block content_block %}
 	<h1>{{ user.username }}</h1>
+	<p>{{ user.phone }}</p>
 	<p>{{ user.last_login }}</p>
 	<a href="{% url 'accounts:profile_update' pk=user.pk %}"><p class="btn btn-primary">Изменить профайл</p></a>
 {% endblock %}

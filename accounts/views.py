@@ -4,6 +4,9 @@ from django.views.generic import CreateView, DetailView, UpdateView
 from django.http import HttpResponseRedirect
 from django.contrib.auth.views import LoginView
 
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+
 from . import forms
 
 from . import models
@@ -21,6 +24,7 @@ class SignUp(CreateView):
 
     def form_valid(self, form):
         form.send_request()
+        # form.create_profile(self.request)
         return super().form_valid(form)
 
 def logout_view(request):
@@ -36,6 +40,7 @@ class UserLoginView(LoginView):
     template_name = "accounts/login.html"
 
 class ProfileUpdateView(UpdateView):
-    model = models.Profile
-    fields = ['phone']
+    form_class = forms.UserUpdateForm
+    model = models.ApiUser
     template_name = 'accounts/update.html'
+

@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content_block %}
-	<nav>
+<nav>
 	<ul class="nav nav-pills nav-fill">
 		<a class="nav-item nav-link" href="{% url 'schedule' %}">Рассписание</a>
 		<a class="nav-item nav-link" href="{% url 'staff' %}">Персонал</a>
 	</ul>
 </nav>
+{% if user.is_authenticated %}
 	{% block info_block %}{% endblock %}
+{% else %}
+		<p>Возможно, вы забыли <a href="{% url 'accounts:login' %}">зайти в учетную запись</a>.</p>
+{% endif %}
 {% endblock %}
