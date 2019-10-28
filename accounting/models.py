@@ -8,7 +8,8 @@ from group.models import Group, Kid
 class Kassa(models.Model):
 	name = models.CharField(max_length=32)
 	card = models.CharField(max_length=16, null=True, blank=True)
-	group = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
+	group = models.ForeignKey(Group, related_name='kassas',
+								on_delete=models.CASCADE, null=True)
 	create_date = models.DateField(auto_now_add=True, null=True)
 	descripton = models.TextField(null=True, blank=True)
 
