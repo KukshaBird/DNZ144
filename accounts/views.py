@@ -4,7 +4,6 @@ from django.views.generic import CreateView, DetailView, UpdateView
 from django.http import HttpResponseRedirect
 from django.contrib.auth.views import LoginView
 
-from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
 from . import forms
@@ -43,4 +42,3 @@ class ProfileUpdateView(UpdateView):
     form_class = forms.UserUpdateForm
     model = models.ApiUser
     template_name = 'accounts/update.html'
-

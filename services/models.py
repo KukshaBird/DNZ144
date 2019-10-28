@@ -12,10 +12,16 @@ class IssuesModel(models.Model):
 	created_date = models.DateTimeField(default=timezone.now)
 	closed_date = models.DateTimeField(blank=True, null=True)
 	access_to = models.ManyToManyField(Group, related_name='issues')
+	img = models.ImageField(upload_to='media', blank=True, null=True)
 
 
 	def __str__(self):
 		return self.title
+
+	def close_issue(self):
+		self.closed_date = timezone.now()
+		self.is_closed = True
+		self.save()
 
 class Comment(models.Model):
     issue = models.ForeignKey(IssuesModel, related_name='issue_comments', on_delete=models.CASCADE, null=True)

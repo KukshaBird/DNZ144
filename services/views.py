@@ -2,6 +2,8 @@ from django.views.generic import (TemplateView, ListView,
 									DetailView, CreateView)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 
 from .models import IssuesModel, Comment
 from poll.models import Poll
@@ -81,3 +83,9 @@ class CreatePollView(LoginRequiredMixin, CreateView):
 	template_name = 'poll/polls_create.html'
 	fields = ['question']
 	success_url = reverse_lazy('services:polls_list')
+
+@login_required
+def close_issue(request, pk):
+	issue = get_object_or_404(IssuesModel, pk=pk)
+	issue.close_issue()
+	return redirect('services:issues')

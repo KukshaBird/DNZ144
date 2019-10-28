@@ -5,42 +5,45 @@
 	<p>Расписания</p>
 	<p>Режим роботи: з 7.00 до 19.00.</p>
 	<h4>Режим дня</h4>
-	<table>
-		<tr>
-			<td>{{"Занятие"|upper}}</td>
-			<td>{{"Время"|upper}}</td>
-		</tr>
-		<tr>
-			<td>{{"завтрак"|capfirst}}</td>
-			<td>8.00</td>
-		</tr>
-		<tr>
-			<td>{{"Заявка на еду"|capfirst}}</td>
-			<td>8.15</td>
-		</tr>
-		<tr>
-			<td>{{"музыка"|capfirst}}</td>
-			<td>9.30</td>
-		</tr>
-		<tr>
-			<td>Утренняя прогулка</td>
-			<td>10.00</td>
-		</tr>
-		<tr>
-			<td>Сон</td>
-			<td>11.30</td>
-		</tr>
-		<tr>
-			<td>Подъем</td>
-			<td>15.30</td>
-		</tr>
-		<tr>
-			<td>Ужин</td>
-			<td>16.00</td>
-		</tr>
-		<tr>
-			<td>Вечерняя прогулка</td>
-			<td>16.30</td>
-		</tr>
-	</table>
+	<table class="table table-sm">
+	  <thead class="thead-light">
+	    <tr>
+	      <th scope="col">{{"Время"|upper}}</th>
+	      <th scope="col">{{"Занятие"|upper}}</th>
+	    </tr>
+	  </thead>
+	<tbody>
+	    <tr>
+	      <th scope="row">8.00</th>
+	      <td>{{"завтрак"|capfirst}}</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">8.15</th>
+	      <td>{{"Заявка на еду"|capfirst}}</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">9.30</th>
+	      <td>{{"музыка"|capfirst}}</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">10.00</th>
+	      <td>Утренняя прогулка</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">11.30</th>
+	      <td>Сон</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">15.30</th>
+	      <td>Подъем</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">16.00</th>
+	      <td>Ужин</td>
+	    </tr>
+	    <tr>
+		<th scope="row">16.30</th>
+	      <td>Вечерняя прогулка</td>
+	    </tr>
+  	</tbody>
 {% endblock %}

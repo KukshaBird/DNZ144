@@ -6,8 +6,13 @@
 <div>
 	{% if issuesmodel_list %}
 	{% for issue in issuesmodel_list %}
-		<h3>{{ issue.title }}</h3>
-		<p>{{ issue.description }}</p>
+<div class="card mb-3">
+  <div class="card-body">
+    <h5 class="card-title">{{ issue.title }}</h5>
+    <p class="card-text">{{ issue.description }}</p>
+    <p class="card-text"><small class="text-muted">Тема закрыта: {{ issue.closed_date }}</small></p>
+  </div>
+</div>
 	{% endfor %}
 	{% else %}
 		<p>Зактырых вопросов доступных вашей учетной записи не найдено.</p>

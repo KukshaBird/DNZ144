@@ -16,5 +16,5 @@ class IssuesCreateForm(forms.ModelForm):
 
 	class Meta:
 		model = IssuesModel
-		fields = ['title', 'description']
+		fields = ['title', 'description', 'img']
 		

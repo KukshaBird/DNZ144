@@ -9,14 +9,20 @@
 <div>
 	{% if issuesmodel_list %}
 	{% for issue in issuesmodel_list %}
-		<div class="border border-info rounded-top">
-			<h4>
-				<a href="{% url 'services:issues_detail' pk=issue.pk %}">{{ issue.title|upper }}</a>
-			</h4>
-			<p>{{ issue.description|truncatechars:200 }}</p>
-			<p>{{ issue.author }}</p>
-			<p>{{ issue.created_date }}</p>
-		</div>
+<div class="card mb-3">
+  <div class="card-body">
+  	{% if issue.img %}
+  	<img src="{% static issue.img.url %}" class="card-img-top" alt="">
+  	{% endif %}
+    <h5 class="card-title"><a href="{% url 'services:issues_detail' pk=issue.pk %}">{{ issue.title|upper }}</a></h5>
+    <p class="card-text">{{ issue.description|truncatechars:300 }}</p>
+    <p class="card-text">Пост создал: {{ issue.author }}</p>
+    <p class="card-text"><small class="text-muted">{{ issue.created_date }}</small></p>
+    {% if user.is_superuser %}
+    <a class="btn btn-danger" href="{% url 'services:issues_close' pk=issue.pk %}">Закрыть вопрос</a>
+    {% endif %}
+  </div>
+</div>
 	{% endfor %}
 	{% else %}
 		<p>Открытых вопросов доступных вашей учетной записи не найдено.</p>
