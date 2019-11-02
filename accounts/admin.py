@@ -4,12 +4,11 @@ from django.contrib.auth.admin import UserAdmin
 from . import models
 
 
-from group import models as group_model
+# from group import models as group_model
 
 @admin.register(models.ApiUser)
 class ApiUserAdmin(admin.ModelAdmin):
 	pass
 
 
-admin.site.register(models.Profile)
-# admin.site.register(models.ApiUser, UserAdmin)
+# admin.site.register(models.Profile)

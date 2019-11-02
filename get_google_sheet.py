@@ -1,5 +1,6 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import pprint
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DNZ144.settings')
 import django
@@ -8,8 +9,8 @@ from django.conf import settings
 
 
 def main():
-	from group import models
-	from accounting import models as buh
+	from group import models as group_model
+	from accounting import models as buh_model
 	from accounts.models import ApiUser
 	scope = ['https://spreadsheets.google.com/feeds',
 			'https://www.googleapis.com/auth/spreadsheets',
@@ -19,28 +20,23 @@ def main():
 	#TODO os.path()
 	creds = ServiceAccountCredentials.from_json_keyfile_name(os.path.join(settings.BASE_DIR, 'DNZ144-c13c1ab86ec0.json'), scope)
 	client = gspread.authorize(creds)
-	sheet = client.open('kids_list').sheet1
+	sheet = client.open('Names').worksheet('Sheet2')
 	# data = sheet.get_all_values()
 	data = sheet.get_all_records()
 
-	# print(data)
-
-	# trans = buh.Operation
-	# kassa = buh.Kassa
-	# for entry in data:
-	# 	new_trans = trans.objects.create(
-	# 			kassa = kassa.objects.get(name=entry['fond']),
-	# 			kid =  models.Kid.objects.get(id=entry['kid_id']),
-	# 			trans_type = entry['trans_type'],
-	# 			amount = entry['amount'],
-	# 			comment = entry['comment'],
-	# 			user = ApiUser.objects.first()
-	# 		)
-	# 	new_trans.save()
+	for row in data:
+		if row['Сумма'] != '':
+			buh_model.Operation.objects.create(
+					kassa = buh_model.Kassa.objects.get(name=row['Касса']),
+					# kid = group_model.Kid.objects.get(id=row['№']),
+					kid = group_model.Kid.objects.get(last_name=row['ФИО'].split()[0].strip()),
+					user = ApiUser.objects.first(),
+					trans_type = "DEB",
+					amount = row['Сумма'],
+				)
+			print(row)
 
 
-	for kid in data:
-		models.Kid.objects.get_or_create(last_name=kid["last"])
 
 if __name__ == '__main__':
 	main()

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content_block %}
+{% if user.is_superuser %}
+	<h1>Transfer</h1>
+	<form method="POST" id="transfer-form">
+		{% csrf_token %}
+		{{ form|crispy }}
+		<input class="btn btn-warning" type="submit" name="Transfer">	
+	</form>
+{% endif %}
+{% endblock %}
+
+<!-- JS -->
+{% block js_block %}
+<script type="text/javascript">
+	$('#transfer-form').submit(function(){
+	    $.ajax({
+	        type: "POST",
+	        url: "{% url 'accounting:transfer_submit' %}",
+	        dataType: "json",
+	        async: true,
+	        data: $(this).serialize(),
+	        success: function(response) {
+	            alert('Средства сняты со счетов!');
+
+	        },
+	        error:  function(response) {
+	        	alert("Операция не удалась!")
+	        }                 
+	    });
+	    return false;
+	});
+</script>
+{% endblock %}

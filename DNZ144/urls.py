@@ -20,13 +20,13 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls'), name='django_auth'),
+    path('groups/', include('group.urls'), name='group'),
+    path('registration/', include('accounts.urls'), name='registration'),
+    path('accounting/', include('accounting.urls'), name='accounting'),
     path('', views.home_view, name='home'),
     path('contacts/', views.contacts_view, name='contacts'),
     path('info/', views.info_view, name='info'),
     path('info/staff', views.staff_view, name='staff'),
     path('info/schedule', views.schedule_view, name='schedule'),
     path('services/', include('services.urls'), name='services'),
-    path('groups/', include('group.urls'), name='group'),
-    path('registration/', include('accounts.urls'), name='registration'),
-    path('accounting/', include('accounting.urls'), name='accounting'),
 ]

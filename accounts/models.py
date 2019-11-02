@@ -1,7 +1,7 @@
 from django.db import models
-from django.conf import settings
 from django.urls import reverse
-from django.contrib.auth.models import AbstractUser, PermissionsMixin
+from django.contrib.auth.models import AbstractUser
+
 
 class ApiUser(AbstractUser):
 	phone = models.CharField(max_length=10, blank=True, null=True,
@@ -23,13 +23,11 @@ class ApiUser(AbstractUser):
 			group_list.append(kid.groups.first())
 		return group_list
 
-class Profile(models.Model):
-	user = models.OneToOneField(settings.AUTH_USER_MODEL,
-								on_delete=models.CASCADE,
-								related_name='profile',
-								)
-	phone = models.CharField(max_length=10, blank=True, null=True)
+	def get_balanse(self):
+		from accounting.models import Kassa
+		balance = 0
+		for kassa in Kassa.objects.filter(group=self.get_group_list()[0]):
+			if kassa.kid_balance(self.kids.first()):
+				balance += kassa.kid_balance(self.kids.first())['balance']
+		return balance
 
-
-
-	

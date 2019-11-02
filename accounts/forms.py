@@ -1,6 +1,6 @@
 # from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from accounts.models import ApiUser, Profile
+from accounts.models import ApiUser
 from django import forms
 
 from django.core.mail import send_mail
@@ -29,9 +29,9 @@ class UserCreateForm(UserCreationForm):
             fail_silently=False,
         )
     # create new profile object to new user
-    def create_profile(self, request):
-        profile = Profile.objects.get_or_create(user=request.user)
-        profile.save()
+    # def create_profile(self, request):
+    #     profile = Profile.objects.get_or_create(user=request.user)
+    #     profile.save()
 
 class DateInput(forms.DateInput):
     input_type = 'date'

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content_block %}
+{% if user.is_superuser %}
+	<h1>Движение денежных средств</h1>
+	<form method="POST" id="operation-form">
+		{% csrf_token %}
+		{{ form|crispy }}
+		<input class="btn btn-warning" type="submit" name="submit">	
+	</form>
+
+	<a href="{% url 'accounting:create_withdraw' %}"><button class="btn btn-danger">Списать средства</button></a>
+	<a href="{% url 'accounting:create_transfer' %}"><button class="btn btn-warning">Перекинуть балансы</button></a>
+{% endif %}
+{% endblock %}
+
+<!-- JS -->
+{% block js_block %}
+<script type="text/javascript">
+	$('#operation-form').submit(function(){
+	    $.ajax({
+	        type: "POST",
+	        url: "{% url 'accounting:operation_submit' %}",
+	        dataType: "json",
+	        async: true,
+	        data: $(this).serialize(),
+	        success: function(response) {
+	            alert('Операция создана!');
+
+	        },
+	        error:  function(response) {
+	        	alert("Операция не удалась!")
+	        }                 
+	    });
+	    return false;
+	});
+</script>
+{% endblock %}

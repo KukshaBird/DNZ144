@@ -1,15 +1,19 @@
 {% extends 'info.html' %}
 
 {% block info_block %}
-	<table>
+	<table class="table table-sm">
+
+	  <thead class="thead-light">
 		<tr>
-			<td>{{"имя"|upper}}</td>
-			<td>{{"телефон"|upper}}</td>
+			<td scope="col">{{"имя"|upper}}</td>
+			<td scope="col">{{"телефон"|upper}}</td>
 		</tr>
+	  </thead>
+
 	
 	{% for staff in staff_list %}
 		<tr>
-			<td>{{ staff.first_name }}</td>
+			<td scope="row">{{ staff.first_name }}</td>
 			<td>{{ staff.phone }}</td>
 		</tr>
 	{% endfor %}
