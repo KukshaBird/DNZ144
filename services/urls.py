@@ -11,7 +11,5 @@ urlpatterns = [
 	path('issues/create/', views.CreateIssuesView.as_view(), name='issues_create'),
 	path('issues/close/<pk>', views.close_issue, name='issues_close'),
 	path('issues/create_comment/', views.CreateCommentView.as_view(), name='comment_create'),
-	path('polls/', views.PollsViewList.as_view(), name='polls_list'),
-	path('polls/create', views.CreatePollView.as_view(), name='polls_create'),
-	path('polls/', include(("poll.urls", 'poll_api'), namespace='poll')),
+	path('kid_polls/', include("kids_poll.urls"), name='kids_poll'),
 ]

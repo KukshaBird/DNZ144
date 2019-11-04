@@ -1,7 +1,8 @@
-{% extends 'services/base.html' %}
+{% extends 'kids_poll_base.html' %}
+
 {% load crispy_forms_tags %}
 
-{% block spec_block %}
+{% block kids_poll_content %}
 	<form method="POST">
 		{% csrf_token %}
 		{{ form|crispy }}

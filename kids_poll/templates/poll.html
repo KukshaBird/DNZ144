@@ -1,9 +1,9 @@
-{% extends "poll/base.html" %}
+{% extends "kids_poll_base.html" %}
 
 {% block poll_script %}
 <script type="text/javascript">
-var vote_url = "{% url 'services:poll:vote' poll.pk %}";
-var result_url = "{% url 'services:poll:result' poll.pk %}";
+var vote_url = "{% url 'services:kids_poll:vote' poll.pk %}";
+var result_url = "{% url 'services:kids_poll:result' poll.pk %}";
 document.addEventListener('DOMContentLoaded', function(){
     function showResults() {
         jQuery.get(result_url, function(data) {
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function(){
 {% endblock %}
 
 <div id="poll_container">
-	{% block poll_content %}
+	{% block kids_poll_content %}
        <div class="poll_style">
     <form method="GET" action="" id="poll_form">
         <div class="poll-title">{{ poll.question }}</div>

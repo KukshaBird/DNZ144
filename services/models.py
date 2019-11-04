@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from group.models import Group
-from poll.models import Poll
+from kids_poll.models import Poll
 from django.conf import settings
 
 class IssuesModel(models.Model):

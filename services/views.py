@@ -6,7 +6,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
 from .models import IssuesModel, Comment
-from poll.models import Poll
 from group.models import Group
 
 from django.contrib.auth import get_user_model
@@ -66,23 +65,6 @@ class CreateCommentView(LoginRequiredMixin, CreateView):
 	template_name = 'services/issues_create.html'
 	fields = '__all__'
 	success_url = reverse_lazy('services:issues')
-
-class PollsViewList(ListView):
-	model = Poll
-	template_name = 'services/polls_list.html'
-
-	def get_queryset(self):
-		if self.request.user.is_authenticated:
-			queryset = Poll.objects.filter(group_polls__exact=self.request.user.get_group_list()[0].id)
-			return queryset
-		else:
-			return False
-
-class CreatePollView(LoginRequiredMixin, CreateView):
-	model = Poll
-	template_name = 'poll/polls_create.html'
-	fields = ['question']
-	success_url = reverse_lazy('services:polls_list')
 
 @login_required
 def close_issue(request, pk):

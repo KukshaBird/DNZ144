@@ -16,7 +16,7 @@
 		{% else %}
 		<p>Не оплачено от ребенка: {{ user.kids.first.last_name }}</p>
 		{% endif %}
-		<p>Kid BALANCE: {{kid_balance}}</p>
+		<p>Kid BALANCE: {{ kid_balance|floatformat:2 }}</p>
 	{% endblock %}
 
 {% endblock %}

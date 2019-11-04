@@ -2,7 +2,7 @@
 
 {% block content_block %}
 	<h1>Бухгалтерия</h1>
-	<h4>Total summ: {{ total_sum }}.</h4>
+	<h4>Total summ: {{ total_sum|floatformat }}.</h4>
 	<p>BALANCE: {{ user.get_balanse|floatformat:2 }}</p>
 		{% for kassa in kassa_list %}
 		<a href="{{ kassa.get_absolute_url }}"><h3>Фонд: {{ kassa.name }}</h3></a>

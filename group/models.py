@@ -3,7 +3,6 @@ from django.utils.text import slugify
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
-from poll.models import Poll
 
 # https://docs.djangoproject.com/en/1.11/howto/custom-template-tags/#inclusion-tags
 # This is for the in_group_members check template tag
@@ -27,7 +26,6 @@ class Group(models.Model):
 	kids = models.ManyToManyField(Kid, related_name='groups', blank=True)
 	slug = models.SlugField(allow_unicode=True, unique=True)
 	number = models.PositiveSmallIntegerField(null=True)
-	polls = models.ManyToManyField(Poll, related_name='group_polls', blank=True)
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.name)
