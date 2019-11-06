@@ -1,4 +1,4 @@
-Django==2.2
+Django==2.2.4
 gunicorn
 pip
 django-bootstrap-form==3.4
