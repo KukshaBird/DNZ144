@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-import django_heroku
 
 import os
 
@@ -26,7 +25,7 @@ SECRET_KEY = '%%gq=1+cb3q!4y*%u$i$#kf#4-^bj9(i%ys5crc)r-riy1vf#u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dnz144.kiev.ua']
 
 
 # Application definition
@@ -80,6 +79,15 @@ WSGI_APPLICATION = 'DNZ144.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'OPTIONS': {
+#             'read_default_file': '/home/lljezrhc/mysql.cnf',
+#         },
+#     }
+# }
 
 DATABASES = {
     'default': {
@@ -143,6 +151,3 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'subslavyan01@gmail.com'
 EMAIL_HOST_PASSWORD = 'XZxz1112220'
 EMAIL_PORT = 587
-
-#HEROKU
-django_heroku.settings(locals())

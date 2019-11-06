@@ -1,0 +1,18 @@
+body {
+	font-family: 'PT Sans', sans-serif;
+}
+
+#main-title {
+	font-family: 'Merriweather', serif;
+}
+
+#main-title:hover {
+	color: blue;
+	text-decoration: none;
+
+}
+
+a:hover, a:visited, a:link, a:active
+{
+    text-decoration: none;
+}
