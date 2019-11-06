@@ -25,7 +25,7 @@ SECRET_KEY = '%%gq=1+cb3q!4y*%u$i$#kf#4-^bj9(i%ys5crc)r-riy1vf#u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['dnz144.kiev.ua']
+ALLOWED_HOSTS = []
 
 
 # Application definition
