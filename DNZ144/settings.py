@@ -25,7 +25,7 @@ SECRET_KEY = '%%gq=1+cb3q!4y*%u$i$#kf#4-^bj9(i%ys5crc)r-riy1vf#u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dnz144.kiev.ua']
 
 
 # Application definition
@@ -80,6 +80,18 @@ WSGI_APPLICATION = 'DNZ144.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+DATABASES = {
+    'default': {
+        'NAME': 'lljezrhc_dnz144',
+        'ENGINE': 'mysql.connector.django',
+        'USER': 'lljezrhc_admin',
+        'PASSWORD': 'pir3GYWmb6WjGLF',
+        'OPTIONS': {
+          'autocommit': True,
+        },
+    }
+}
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -89,12 +101,12 @@ WSGI_APPLICATION = 'DNZ144.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 # Password validation
@@ -134,9 +146,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'DNZ144/static')
+STATIC_ROOT = '/home/lljezrhc/public_html/static'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = '/home/lljezrhc/public_html/media'
 
 LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = '/'
@@ -145,9 +157,9 @@ AUTH_USER_MODEL = 'accounts.ApiUser'
 DATETIME_INPUT_FORMATS = ['%d/%m/%Y']
 
 #MAILING
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'subslavyan01@gmail.com'
-EMAIL_HOST_PASSWORD = 'XZxz1112220'
-EMAIL_PORT = 587
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'mail.dnz144.kiev.ua'
+EMAIL_HOST_USER = 'info@dnz144.kiev.ua'
+EMAIL_HOST_PASSWORD = 'dnzpassword'
+EMAIL_PORT = 465

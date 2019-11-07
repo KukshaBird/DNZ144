@@ -2,6 +2,7 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from accounts.models import ApiUser
 from django import forms
+from django.conf import settings
 
 from django.core.mail import send_mail
 
@@ -24,7 +25,7 @@ class UserCreateForm(UserCreationForm):
         send_mail(
             'Запрос на регистрацию',
             self.cleaned_data["kid_request"] + " от " + self.cleaned_data["username"],
-            'subslavyan01@gmail.com',
+            settings.EMAIL_HOST_USER,
             ['samoilovartem1989@gmail.com'],
             fail_silently=False,
         )
