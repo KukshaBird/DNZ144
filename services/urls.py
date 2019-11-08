@@ -10,6 +10,6 @@ urlpatterns = [
 	path('issues/details/<pk>', views.DetailIssuesView.as_view(), name='issues_detail'),
 	path('issues/create/', views.CreateIssuesView.as_view(), name='issues_create'),
 	path('issues/close/<pk>', views.close_issue, name='issues_close'),
-	path('issues/create_comment/', views.CreateCommentView.as_view(), name='comment_create'),
+	path('issues/create_comment_<pk>/', views.CreateCommentView.as_view(), name='comment_create'),
 	path('kid_polls/', include("kids_poll.urls"), name='kids_poll'),
 ]

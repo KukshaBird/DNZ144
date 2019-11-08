@@ -63,8 +63,14 @@ class CreateIssuesView(LoginRequiredMixin, CreateView):
 class CreateCommentView(LoginRequiredMixin, CreateView):
 	model = Comment
 	template_name = 'services/issues_create.html'
-	fields = '__all__'
+	fields = ['text']
 	success_url = reverse_lazy('services:issues')
+
+	def form_valid(self, form):
+		form.instance.author = self.request.user
+		form.instance.issue = IssuesModel.objects.get(pk=self.kwargs['pk'])
+		form.instance.save()
+		return super().form_valid(form)
 
 @login_required
 def close_issue(request, pk):
