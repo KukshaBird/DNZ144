@@ -20,10 +20,12 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'services\\templates')
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '%%gq=1+cb3q!4y*%u$i$#kf#4-^bj9(i%ys5crc)r-riy1vf#u'
+with open('/home/lljezrhc/SECRET_KEY.txt') as f:
+    MY_KEY = f.read()
+SECRET_KEY = MY_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['dnz144.kiev.ua']
 
@@ -114,16 +116,8 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'OPTIONS': {'min_length': 4}
     },
 ]
 
@@ -163,3 +157,5 @@ EMAIL_HOST = 'mail.dnz144.kiev.ua'
 EMAIL_HOST_USER = 'info@dnz144.kiev.ua'
 EMAIL_HOST_PASSWORD = 'dnzpassword'
 EMAIL_PORT = 465
+
+SECURE_SSL_REDIRECT = True
