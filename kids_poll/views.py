@@ -80,7 +80,7 @@ def percentage(poll, item):
     if poll_vote_count > 0:
         return float(item.get_vote_count()) / float(poll_vote_count) * 100
 
-class PollsViewList(ListView):
+class PollsViewList(LoginRequiredMixin, ListView):
     model = Poll
     template_name = 'polls_list.html'
 
