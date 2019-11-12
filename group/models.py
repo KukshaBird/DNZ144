@@ -24,7 +24,6 @@ class Kid(models.Model):
 class Group(models.Model):
 	name = models.CharField(max_length=30, blank=True, null=True, unique=True)
 	kids = models.ManyToManyField(Kid, related_name='groups', blank=True)
-	slug = models.SlugField(allow_unicode=True, unique=True)
 	number = models.PositiveSmallIntegerField(null=True)
 
 	def save(self, *args, **kwargs):
