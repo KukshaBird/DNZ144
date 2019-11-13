@@ -21,7 +21,11 @@
 		{% if user.is_authenticated %}
 		<div class="row">
 			<div class="col">
-				<h3 class="text-left">Вам доступна информация по группе: <span class="badge badge-secondary">{% for group in user.get_group_list %}{{ group }}{% endfor %}</span></h3>
+				<h3 class="text-left">Вам доступна информация по группе:
+					{% if user.get_group_list|length < 1 %}
+				 <span class="badge badge-secondary">У Вас нет привязки к группе.{% else %}{% for group in user.get_group_list %}{{ group }}{% endfor %}</span></h3>
+					{% endif %}
+
 			</div>
 			{% if user.is_superuser %}
 			<div class="col-md-auto">
