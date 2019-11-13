@@ -52,7 +52,11 @@ def poll_view(request, poll_id):
 
     context = {'poll': poll, 'items': items,}
 
-    # if request.user.kids.first() in Vote.objects.filter(poll=poll).values_list('kid'):
+    #if user have not group yet
+    if len(request.user.get_group_list()) < 1:
+        return render(request, "result.html", context)
+
+    # if user's kid have voted render results
     users_kid = request.user.kids.first()
     if Vote.objects.filter(poll=poll,kid=users_kid).exists():
         return render(request, "result.html", context)
