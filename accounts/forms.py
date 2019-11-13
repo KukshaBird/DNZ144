@@ -2,6 +2,7 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from accounts.models import ApiUser
 from django import forms
+from django.conf import settings
 
 from django.core.mail import send_mail
 
@@ -15,16 +16,17 @@ class UserCreateForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["username"].label = "Имя которое будет отображаться на сайте"
-        self.fields["email"].label = "Электронная почта"
-        self.fields["kid_request"].label = "Фамилия ребенка"
+        self.fields["username"].label = "Имя которое будет отображаться на сайте. Не должно содержать пробелов."
+        self.fields["email"].label = "Электронная почта. Не обязательно для заполнения."
+        self.fields["kid_request"].label = "Фамилия ребенка к которому будет привязана учетная запись. Обязательна для заполнения."
+        self.fields["phone"].label = "Номер телефона. Не обязательно для заполнения."
 
     # send mail to admin with the last name of the kid wich new user wants to be connected.
     def send_request(self):
         send_mail(
             'Запрос на регистрацию',
             self.cleaned_data["kid_request"] + " от " + self.cleaned_data["username"],
-            'subslavyan01@gmail.com',
+            settings.EMAIL_HOST_USER,
             ['samoilovartem1989@gmail.com'],
             fail_silently=False,
         )
