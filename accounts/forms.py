@@ -30,10 +30,6 @@ class UserCreateForm(UserCreationForm):
             ['samoilovartem1989@gmail.com'],
             fail_silently=False,
         )
-    # create new profile object to new user
-    # def create_profile(self, request):
-    #     profile = Profile.objects.get_or_create(user=request.user)
-    #     profile.save()
 
 class DateInput(forms.DateInput):
     input_type = 'date'

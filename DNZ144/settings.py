@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-import django_heroku
 
 import os
 
@@ -21,12 +20,14 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'services\\templates')
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '%%gq=1+cb3q!4y*%u$i$#kf#4-^bj9(i%ys5crc)r-riy1vf#u'
+with open('/home/lljezrhc/SECRET_KEY.txt') as f:
+    MY_KEY = f.read()
+SECRET_KEY = MY_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dnz144.kiev.ua']
 
 
 # Application definition
@@ -83,10 +84,31 @@ WSGI_APPLICATION = 'DNZ144.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'lljezrhc_dnz144',
+        'ENGINE': 'mysql.connector.django',
+        'USER': 'lljezrhc_admin',
+        'PASSWORD': 'pir3GYWmb6WjGLF',
+        'OPTIONS': {
+          'autocommit': True,
+        },
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'OPTIONS': {
+#             'read_default_file': '/home/lljezrhc/mysql.cnf',
+#         },
+#     }
+# }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 # Password validation
@@ -94,16 +116,8 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'OPTIONS': {'min_length': 4}
     },
 ]
 
@@ -126,9 +140,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'DNZ144/static')
+STATIC_ROOT = '/home/lljezrhc/public_html/static'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = '/home/lljezrhc/public_html/media'
 
 LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = '/'
@@ -137,12 +151,11 @@ AUTH_USER_MODEL = 'accounts.ApiUser'
 DATETIME_INPUT_FORMATS = ['%d/%m/%Y']
 
 #MAILING
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'subslavyan01@gmail.com'
-EMAIL_HOST_PASSWORD = 'XZxz1112220'
-EMAIL_PORT = 587
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'mail.dnz144.kiev.ua'
+EMAIL_HOST_USER = 'info@dnz144.kiev.ua'
+EMAIL_HOST_PASSWORD = 'dnzpassword'
+EMAIL_PORT = 465
 
-#HEROKU
-django_heroku.settings(locals())
+SECURE_SSL_REDIRECT = True
