@@ -7,7 +7,7 @@ var result_url = "{% url 'services:kids_poll:result' poll.pk %}";
 document.addEventListener('DOMContentLoaded', function(){
     function showResults() {
         jQuery.get(result_url, function(data) {
-            $("#poll_container").html(data);
+            $("body").html(data);
         });
     }
     $("#poll_send").click(function() {
