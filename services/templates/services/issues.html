@@ -3,7 +3,7 @@
 
 {% block spec_block %}
 <h2>Открытые вопросы</h2>
-{% if user.is_authenticated %}
+{% if user.has_groups or user.is_superuser %}
 <a href="{% url 'services:issues_create' %}"><p class="btn btn-primary">Открыть новый вопрос</p></a>
 {% endif %}
 <div>
