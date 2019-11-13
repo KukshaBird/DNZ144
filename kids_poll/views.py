@@ -53,7 +53,7 @@ def poll_view(request, poll_id):
     context = {'poll': poll, 'items': items,}
 
     #if user have not group yet
-    if len(request.user.get_group_list()) < 1:
+    if not request.user.has_group():
         return render(request, "result.html", context)
 
     # if user's kid have voted render results
