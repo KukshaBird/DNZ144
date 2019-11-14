@@ -2,8 +2,8 @@
 
 {% block content_block %}
 	<h1>Бухгалтерия</h1>
-	<h4>Total summ: {{ total_sum|floatformat }}.</h4>
-	<p>BALANCE: {{ user.get_balanse|floatformat:2 }}</p>
+	<h4>Общий баланс группы: {{ total_sum|floatformat }}.</h4>
+	<p>Ваш общий баланс: {{ user.get_balanse|floatformat:2 }}</p>
 	{% for kassa in kassa_list %}
 	<div class="card mb-3">
 		<div class="card-body">
