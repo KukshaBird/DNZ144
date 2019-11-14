@@ -12,6 +12,8 @@ class Kassa(models.Model):
 								on_delete=models.CASCADE, null=True)
 	create_date = models.DateField(auto_now_add=True, null=True)
 	descripton = models.TextField(null=True, blank=True)
+	is_charity = models.BooleanField(null=True, default=False)
+	is_active = models.BooleanField(null=True, default=True)
 
 	def __str__(self):
 		return self.name

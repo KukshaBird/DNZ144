@@ -29,7 +29,11 @@ class KassaListView(LoginRequiredMixin, ListView):
 	def get_queryset(self):
 		if not self.request.user.has_group():
 			return None
-		queryset = Group.objects.get(pk=self.request.user.get_group_list()[0].pk).kassas.all()
+		#TODO: create list of groups.
+		queryset = (Group.objects.
+			get(pk=self.request.user.get_group_list()[0].pk).
+			kassas.filter(is_active=True).
+			order_by('-create_date'))
 		return queryset
 
 	def get_context_data(self, **kwargs):
