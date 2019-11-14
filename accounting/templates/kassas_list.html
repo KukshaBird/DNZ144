@@ -4,10 +4,15 @@
 	<h1>Бухгалтерия</h1>
 	<h4>Total summ: {{ total_sum|floatformat }}.</h4>
 	<p>BALANCE: {{ user.get_balanse|floatformat:2 }}</p>
-		{% for kassa in kassa_list %}
-		<a href="{{ kassa.get_absolute_url }}"><h3>Фонд: {{ kassa.name }}</h3></a>
-		<p>{{ kassa.descripton }}</p>
-		<p>Остаток: {{ kassa.get_saldo|floatformat:2 }}</p>
-		{% endfor %}
-
+	{% for kassa in kassa_list %}
+	<div class="card mb-3">
+		<div class="card-body">
+			<h5 class="card-title">
+				<a href="{{ kassa.get_absolute_url }}">Фонд: {{ kassa.name }}</a>
+			</h5>
+			<p class="card-text">{{ kassa.descripton }}</p>
+			<p class="card-text">Остаток: {{ kassa.get_saldo|floatformat:2 }}</p>	
+		</div>
+	</div>
+	{% endfor %}
 {% endblock %}
