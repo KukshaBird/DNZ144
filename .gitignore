@@ -10,6 +10,7 @@ static/
 env/
 venv/
 ENV/
+.idea/
 
 __pycache__/
 *.py[cod]
