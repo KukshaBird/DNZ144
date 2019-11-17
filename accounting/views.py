@@ -124,15 +124,15 @@ def transfer_submit(request):
 									kassa=from_k,
 									kid=kid_obj,
 									amount=trans,
-									user = responsible_user,
-									trans_type = "CRE"
+									user=responsible_user,
+									trans_type="CRE"
 								)
 							to_k.operations.create(
 									kassa=to_k,
 									kid=kid_obj,
 									amount=trans,
-									user = responsible_user,
-									trans_type = "DEB"
+									user=responsible_user,
+									trans_type="DEB"
 								)
 					return JsonResponse(response_data)
 				elif rest < 0:
@@ -145,20 +145,21 @@ def transfer_submit(request):
 									kassa=from_k,
 									kid=kid_obj,
 									amount=trans,
-									user = responsible_user,
-									trans_type = "DEB"
+									user=responsible_user,
+									trans_type="DEB"
 								)
 							to_k.operations.create(
 									kassa=to_k,
 									kid=kid_obj,
 									amount=trans,
-									user = responsible_user,
-									trans_type = "CRE"
+									user=responsible_user,
+									trans_type="CRE"
 								)
 					return JsonResponse(response_data)
 		else:
 			form = CreateTransferForm()
 			return JsonResponse(response_data)
+
 
 def operation_submit(request):
 	response_data = {}
@@ -170,15 +171,12 @@ def operation_submit(request):
 					kassa=Kassa.objects.get(pk=data['kassa']),
 					kid=Kid.objects.get(pk=data['kid']),
 					amount=data['amount'],
-					user = ApiUser.objects.get(id=request.user.id),
-					trans_type = data['trans_type'])
+					user=ApiUser.objects.get(id=request.user.id),
+					trans_type=data['trans_type'])
 			if data['trans_type'] == "CRE":
 				Operation.objects.get_or_create(
 					kassa=Kassa.objects.get(pk=data['kassa']),
 					amount=data['amount'],
-					user = ApiUser.objects.get(id=request.user.id),
-					trans_type = data['trans_type'])
+					user=ApiUser.objects.get(id=request.user.id),
+					trans_type=data['trans_type'])
 			return JsonResponse(response_data)
-
-
-

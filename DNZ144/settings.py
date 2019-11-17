@@ -30,7 +30,7 @@ SECRET_KEY = env('SECRET_KEY')
 # False if not in os.environ
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = [env('ALLOWED_HOSTS'),]
+ALLOWED_HOSTS = [env('ALLOWED_HOSTS'), ]
 
 
 # Application definition
@@ -66,7 +66,7 @@ ROOT_URLCONF = 'DNZ144.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR,],
+        'DIRS': [TEMPLATE_DIR, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -87,9 +87,9 @@ WSGI_APPLICATION = 'DNZ144.wsgi.application'
 
 DATABASES = {
     'default': env.db(),
-        'OPTIONS': {
-          'autocommit': True,
-        },
+    'OPTIONS': {
+      'autocommit': True,
+    },
 }
 
 # Password validation
@@ -130,7 +130,7 @@ AUTH_USER_MODEL = 'accounts.ApiUser'
 
 DATETIME_INPUT_FORMATS = ['%d/%m/%Y']
 
-#MAILING
+# MAILING
 EMAIL_USE_TLS = env('EMAIL_USE_TLS')
 EMAIL_USE_SSL = env('EMAIL_USE_SSL')
 EMAIL_HOST = env('EMAIL_HOST')
