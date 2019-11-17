@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content_block %}
+<nav>
+	<ul class="nav nav-pills nav-fill">
+		<a class="nav-item nav-link" href="{% url 'accounting:kassas_list' %}">Открытые фонды</a>
+		<a class="nav-item nav-link" href="{% url 'accounting:kassas_closed_list' %}">Закрытые фонды</a>
+		<a class="nav-item nav-link disabled" href="#">Благотворительность</a>
+	</ul>
+</nav>
+<div class="container">
+	<h4>Общий баланс группы: {{ total_sum|floatformat }}.</h4>
+	<p>Ваш общий баланс: {{ user.get_balanse|floatformat:2 }}</p>
+	{% block kassas_block %}{% endblock %}
+</div>
+{% endblock %}
