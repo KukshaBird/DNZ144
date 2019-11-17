@@ -26,7 +26,37 @@ class KassaListView(LoginRequiredMixin, ListView):
 	template_name = 'kassas_list.html'
 	redirect_field_name = 'accounts:login'
 
-	#TODO: def queryset(self) kassas belongs to user
+	def get_queryset(self):
+		if not self.request.user.has_group():
+			return None
+		#TODO: create list of groups.
+		queryset = (Group.objects.
+			get(pk=self.request.user.get_group_list()[0].pk).
+			kassas.filter(is_active=True).
+			order_by('-create_date'))
+		return queryset
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		total_sum = sum([kassa.get_saldo() for kassa in Group.objects.get(pk=self.request.user.get_group_list()[0].pk).kassas.all()]) if self.request.user.get_group_list() else "Нет доступа к группам"
+		context['total_sum'] = total_sum
+		return context
+
+class KassaClosedListView(LoginRequiredMixin, ListView):
+	model = Kassa
+	# get_context_object_name = 'kassas'
+	template_name = 'kassas_closed_list.html'
+	redirect_field_name = 'accounts:login'
+
+	def get_queryset(self):
+		if not self.request.user.has_group():
+			return None
+		#TODO: create list of groups.
+		queryset = (Group.objects.
+			get(pk=self.request.user.get_group_list()[0].pk).
+			kassas.filter(is_active=False).
+			order_by('-create_date'))
+		return queryset
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)

@@ -1,6 +1,16 @@
 # Byte-compiled / optimized / DLL files
 
 DNZ144-c13c1ab86ec0.json
+**/settings.py
+static/
+
+# Environments
+*.env
+.venv
+env/
+venv/
+ENV/
+.idea/
 
 __pycache__/
 *.py[cod]

@@ -4,8 +4,8 @@
 {% block spec_block %}
 	<div class="issue border border-info">
 	<h4>{{ issuesmodel.title }}</h4>
-	<p>{{ issuesmodel.description|linebreaksbr }}{% lorem 200 w %}</p>
-	<a href="{% url 'services:comment_create' %}"><p class="btn btn-primary">Комментировать</p></a>
+	<p>{{ issuesmodel.description|linebreaksbr }}</p>
+	<a href="{% url 'services:comment_create' pk=issuesmodel.pk %}"><p class="btn btn-primary">Комментировать</p></a>
 	<div>
 		<p>{{ issuesmodel.polls.first.poll }}</p>
 	</div>		

@@ -52,7 +52,11 @@ def poll_view(request, poll_id):
 
     context = {'poll': poll, 'items': items,}
 
-    # if request.user.kids.first() in Vote.objects.filter(poll=poll).values_list('kid'):
+    #if user have not group yet
+    if not request.user.has_group():
+        return render(request, "result.html", context)
+
+    # if user's kid have voted render results
     users_kid = request.user.kids.first()
     if Vote.objects.filter(poll=poll,kid=users_kid).exists():
         return render(request, "result.html", context)
@@ -80,7 +84,7 @@ def percentage(poll, item):
     if poll_vote_count > 0:
         return float(item.get_vote_count()) / float(poll_vote_count) * 100
 
-class PollsViewList(ListView):
+class PollsViewList(LoginRequiredMixin, ListView):
     model = Poll
     template_name = 'polls_list.html'
 

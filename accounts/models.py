@@ -23,11 +23,17 @@ class ApiUser(AbstractUser):
 			group_list.append(kid.groups.first())
 		return group_list
 
+	def has_group(self):
+		if len(self.get_group_list()) > 0:
+			return True
+		return False
+
 	def get_balanse(self):
 		from accounting.models import Kassa
 		balance = 0
-		for kassa in Kassa.objects.filter(group=self.get_group_list()[0]):
-			if kassa.kid_balance(self.kids.first()):
-				balance += kassa.kid_balance(self.kids.first())['balance']
-		return balance
+		if len(self.get_group_list()) > 0:
+			for kassa in Kassa.objects.filter(group=self.get_group_list()[0]):
+				if kassa.kid_balance(self.kids.first()):
+					balance += kassa.kid_balance(self.kids.first())['balance']
+			return balance
 

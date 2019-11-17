@@ -8,9 +8,14 @@
 	<a href="{% url 'services:kids_poll:polls_create' %}"><p class="btn btn-primary">Создать новый опрос</p></a>
 {% endif %}
 	{% if poll_list %}
+	<ul class="list-group list-group-flush">
 	{% for poll in poll_list %}
-		<a href="{% url 'services:kids_poll:poll_view' poll_id=poll.id %}"><p>{{ poll.question }}</p></a>
+		<li class="list-group-item">
+			<a class="text-dark" href="{% url 'services:kids_poll:poll_view' poll_id=poll.id %}">	<p class="font-weight-bold">{{ poll.question }}</p>
+			</a>
+		</li>
 	{% endfor %}
+	</ul>
 	{% else %}
 		<p>Опросов доступных вашей учетной записи не найдено.</p>
 		<p>Возможно, вы забыли <a href="{% url 'login' %}">зайти в учетную запись</a>.</p>
