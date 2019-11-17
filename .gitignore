@@ -5,7 +5,7 @@ DNZ144-c13c1ab86ec0.json
 static/
 
 # Environments
-.env
+*.env
 .venv
 env/
 venv/
