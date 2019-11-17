@@ -5,6 +5,7 @@ app_name = 'accounting'
 
 urlpatterns = [
 	path('kassas/', views.KassaListView.as_view(), name='kassas_list'),
+	path('closed_kassas/', views.KassaClosedListView.as_view(), name='kassas_closed_list'),
 	path('kassas/details/<pk>', views.KassaDetailView.as_view(), name='kassas_details'),
 	path('kassas/admin', views.create_operation, name='create_operation'),
 	path('kassas/operation_submit', views.operation_submit, name='operation_submit'),

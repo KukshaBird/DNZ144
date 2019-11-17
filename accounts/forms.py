@@ -16,9 +16,10 @@ class UserCreateForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["username"].label = "Имя которое будет отображаться на сайте"
-        self.fields["email"].label = "Электронная почта"
-        self.fields["kid_request"].label = "Фамилия ребенка"
+        self.fields["username"].label = "Имя которое будет отображаться на сайте. Не должно содержать пробелов."
+        self.fields["email"].label = "Электронная почта. Не обязательно для заполнения."
+        self.fields["kid_request"].label = "Фамилия ребенка к которому будет привязана учетная запись. Обязательна для заполнения."
+        self.fields["phone"].label = "Номер телефона. Не обязательно для заполнения."
 
     # send mail to admin with the last name of the kid wich new user wants to be connected.
     def send_request(self):
@@ -29,10 +30,6 @@ class UserCreateForm(UserCreationForm):
             ['samoilovartem1989@gmail.com'],
             fail_silently=False,
         )
-    # create new profile object to new user
-    # def create_profile(self, request):
-    #     profile = Profile.objects.get_or_create(user=request.user)
-    #     profile.save()
 
 class DateInput(forms.DateInput):
     input_type = 'date'

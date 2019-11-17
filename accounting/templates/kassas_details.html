@@ -1,22 +1,50 @@
-{% extends 'base.html' %}
+{% extends 'kassas_base.html' %}
 
-{% block content_block %}
-	<h1>Бухгалтерия</h1>
-	<h4>Total summ: {{ kassa.name }}.</h4>
+{% block kassas_block %}
 	{% block accounting_block %}
 		<h3>Фонд: {{ kassa.name }}</h3>
-		<p>Карта пополнения фонда: {{ kassa.card }}</p>
-		<p>Общие доходы: {{ kassa.get_deb_sum|floatformat:2 }}</p>
-		<p>Общие расходы: {{ kassa.get_cre_sum|floatformat:2 }}</p>
-		<p>Остаток: {{ kassa.get_saldo|floatformat:2 }}</p>
-		<p>Оплатило: {{ kassa.kids_paid|length }}/{{ kassa.group.kids.all.count }}</p>
-		<p>Последние данные были внесены: {{ kassa.operations.last.create_date|date:"d M Y" }}</p>
-		{% if user.kids.first.id in kassa.kids_paid %}
-		<p>Оплачено от ребенка: {{ user.kids.first.last_name }}</p>
-		{% else %}
-		<p>Не оплачено от ребенка: {{ user.kids.first.last_name }}</p>
-		{% endif %}
-		<p>Kid BALANCE: {{ kid_balance|floatformat:2 }}</p>
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<th scope="row">Карта для пополнения фонда:</th>
+					<td class="text-right">{{ kassa.card }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Общие доходы:</th>
+					<td class="text-right">{{ kassa.get_deb_sum|floatformat:2 }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Общие расходы:</th>
+					<td class="text-right">{{ kassa.get_cre_sum|floatformat:2 }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Остаток:</th>
+					<td class="text-right">{{ kassa.get_saldo|floatformat:2 }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Оплатило:</th>
+					<td class="text-right">{{ kassa.kids_paid|length }}/{{ kassa.group.kids.all.count }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Последние данные были внесены:</th>
+					<td class="text-right">{{ kassa.operations.last.create_date|date:"d M Y" }}</td>
+				</tr>
+				{% if user.kids.first.id in kassa.kids_paid %}
+				<tr>
+					<th scope="row">Оплата от {{ user.kids.first.last_name }}</th>
+					<td class="text-right">Есть</td>
+				</tr>
+				{% else %}
+				<tr>
+					<th scope="row">Оплата от {{ user.kids.first.last_name }}</th>
+					<td class="text-right">Нет</td>
+				</tr>
+				{% endif %}
+				<tr>
+					<th scope="row">Ваш баланс:</th>
+					<td class="text-right">{{ kid_balance|floatformat:2 }}</td>
+				</tr>
+			</tbody>
+		</table>
 	{% endblock %}
-
 {% endblock %}
