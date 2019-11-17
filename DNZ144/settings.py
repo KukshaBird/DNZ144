@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+import environ
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+environ.Env.read_env('dnz.env')
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'services\\templates')
@@ -19,15 +25,12 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'services\\templates')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-with open('/home/lljezrhc/SECRET_KEY.txt') as f:
-    MY_KEY = f.read()
-SECRET_KEY = MY_KEY
+SECRET_KEY = env('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# False if not in os.environ
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['dnz144.kiev.ua']
+ALLOWED_HOSTS = [env('ALLOWED_HOSTS'),]
 
 
 # Application definition
@@ -83,37 +86,14 @@ WSGI_APPLICATION = 'DNZ144.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'NAME': 'lljezrhc_dnz144',
-        'ENGINE': 'mysql.connector.django',
-        'USER': 'lljezrhc_admin',
-        'PASSWORD': 'pir3GYWmb6WjGLF',
+    'default': env.db(),
         'OPTIONS': {
           'autocommit': True,
         },
-    }
 }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'OPTIONS': {
-#             'read_default_file': '/home/lljezrhc/mysql.cnf',
-#         },
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
