@@ -17,7 +17,7 @@ class UserCreateForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["username"].label = "Имя которое будет отображаться на сайте. Не должно содержать пробелов."
-        self.fields["email"].label = "Электронная почта. Не обязательно для заполнения."
+        self.fields["email"].label = "Электронная почта. Не обязательно для заполнения, но необходима для восстановления пароля."
         self.fields["kid_request"].label = "Фамилия ребенка к которому будет привязана учетная запись. Обязательна для заполнения."
         self.fields["phone"].label = "Номер телефона. Не обязательно для заполнения."
 

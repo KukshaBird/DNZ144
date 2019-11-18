@@ -18,6 +18,9 @@ env = environ.Env(
 )
 environ.Env.read_env('dnz.env')
 
+# Get mails for ADMINS
+from email.utils import getaddresses
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'services\\templates')
@@ -138,6 +141,8 @@ EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = env('EMAIL_PORT')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+ADMINS = getaddresses([env('DJANGO_ADMINS')])
+
 
 SECURE_SSL_REDIRECT = env('SECURE_SSL_REDIRECT')
 SECURE_BROWSER_XSS_FILTER = env('SECURE_BROWSER_XSS_FILTER')

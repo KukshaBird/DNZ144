@@ -2,7 +2,9 @@ from django.contrib.auth import login, logout
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.http import HttpResponseRedirect
-from django.contrib.auth.views import LoginView, PasswordResetView
+from django.contrib.auth.views import (LoginView, PasswordResetView,
+                                       PasswordResetConfirmView,
+                                       PasswordResetCompleteView)
 
 from django.contrib.auth.decorators import login_required
 
@@ -49,3 +51,12 @@ class ProfileUpdateView(UpdateView):
 
 class UserPasswordResetView(PasswordResetView):
     success_url = reverse_lazy("home")
+    template_name = "accounts/reset_pass.html"
+    email_template_name = "accounts/password_reset_email.html"
+
+class UserPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = "accounts/reset.html"
+    success_url = reverse_lazy("accounts:password_reset_complete")
+
+class UserPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = "accounts/password_reset_complete.html"

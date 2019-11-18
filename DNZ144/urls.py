@@ -29,4 +29,5 @@ urlpatterns = [
     path('info/staff', views.staff_view, name='staff'),
     path('info/schedule', views.schedule_view, name='schedule'),
     path('services/', include('services.urls'), name='services'),
+    path('error_500', views.error_500_view, name='error_500'),
 ]

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.conf import settings
 import os
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseServerError
 
 from group.models import Staff
 
@@ -26,3 +27,8 @@ def schedule_view(request):
 def staff_view(request):
 	staff_list = Staff.objects.filter(group__in=request.user.get_group_list())
 	return render(request, 'info/staff.html',context={'staff_list': staff_list})
+
+
+def error_500_view(request):
+	# Return an "Internal Server Error" 500 response code.
+	return HttpResponseServerError()
