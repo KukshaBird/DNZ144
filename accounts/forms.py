@@ -36,11 +36,15 @@ class DateInput(forms.DateInput):
 
 class UserUpdateForm(forms.ModelForm):
 
-    birth_date = forms.DateField(widget=DateInput)
     class Meta:
         model = ApiUser
-        fields = ['phone', 'email']
-        
+        fields = ['phone', 'email', 'birth_date']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['birth_date'].widget = DateInput()
+
+
 
 
 class UserLoginForm(AuthenticationForm):

@@ -9,7 +9,6 @@ from django.conf import settings
 
 
 def main():
-	from group import models as group_model
 	from accounting import models as buh_model
 	from accounts.models import ApiUser
 	scope = ['https://spreadsheets.google.com/feeds',

@@ -9,8 +9,6 @@ from django.conf import settings
 
 def main():
 	from group import models
-	from accounting import models as buh
-	from accounts.models import ApiUser
 	scope = ['https://spreadsheets.google.com/feeds',
 			'https://www.googleapis.com/auth/spreadsheets',
 			'https://www.googleapis.com/auth/drive.file',
