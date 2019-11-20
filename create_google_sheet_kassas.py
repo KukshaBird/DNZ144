@@ -14,6 +14,7 @@ def main():
     from group.models import Group, Kid
     from accounting.models import Kassa
     from accounts.models import ApiUser
+    from gspread.models import Cell
     scope = ['https://spreadsheets.google.com/feeds',
              'https://www.googleapis.com/auth/spreadsheets',
              'https://www.googleapis.com/auth/drive.file',
@@ -25,8 +26,6 @@ def main():
     )
     client = gspread.authorize(creds)
     sheet = client.open('Names').worksheet('tests')
-
-    kids_num = Group.objects.first().kids.all().count()
     cursor = 1
 
     for kassa in Kassa.objects.all():
@@ -38,19 +37,24 @@ def main():
         sheet.update_acell('C' + r, 'Поступление')
         sheet.update_acell('D' + r, 'Снятие')
         sheet.update_acell('E' + r, 'Баланс')
-        # cursor += 1
         row = 1
+        cells_list = []
         for kid in kassa.group.kids.all():
             r = str(row + cursor)
             balance = kassa.kid_balance(kid)
-            sheet.update_acell('A' + r, str(row))
-            sheet.update_acell('B' + r, kid.last_name)
-            sheet.update_acell('C' + r, str(balance['deb']))
-            sheet.update_acell('D' + r, str(balance['cre']))
-            sheet.update_acell('E' + r, str(balance['balance']))
+            cells_list.append(Cell(row + cursor, 1, float(row)))
+            cells_list.append(Cell(row + cursor, 2, kid.last_name))
+            cells_list.append(Cell(row + cursor, 3, float(balance['deb'])))
+            cells_list.append(Cell(row + cursor, 4, float(balance['cre'])))
+            cells_list.append(Cell(row + cursor, 5, float(balance['balance'])))
             row += 1
+        sheet.update_cells(cells_list)
+        sheet.update_acell('C' + str(int(r) + 1), f'=SUM(C{cursor}:E{str(r)})')
+        sheet.update_acell('D' + str(int(r) + 1), f'=SUM(D{cursor}:E{str(r)})')
+        sheet.update_acell('E' + str(int(r)+1), f'=SUM(E{cursor}:E{str(r)})')
+        cursor += 1
         cursor += row
-        time.sleep(100)
+    sheet.update_acell('E' + str(cursor + 1), f'=SUM(E1:E{str(cursor - 1)})')
 
 if __name__ == '__main__':
     main()
