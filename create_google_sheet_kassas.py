@@ -1,26 +1,29 @@
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
-import os
+"""
+Module contain script for regular filling google sheet with operations data for each Kassa.
+"""
 import datetime
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DNZ144.settings')
+import os
+# GoogleAPI
+import gspread
+from gspread.models import Cell
+from oauth2client.service_account import ServiceAccountCredentials
+# Django
 import django
-
-django.setup()
 from django.conf import settings
+# Models
+from accounting.models import Kassa
 
 
 def main():
-    from group.models import Group, Kid
-    from accounting.models import Kassa
-    from accounts.models import ApiUser
-    from gspread.models import Cell
+    """
+
+    :return: string for success-mailing from the server.
+    """
     scope = ['https://spreadsheets.google.com/feeds',
              'https://www.googleapis.com/auth/spreadsheets',
              'https://www.googleapis.com/auth/drive.file',
              'https://www.googleapis.com/auth/drive',
              ]
-    # TODO os.path()
     creds = ServiceAccountCredentials.from_json_keyfile_name(
         os.path.join(settings.BASE_DIR, 'DNZ144-c13c1ab86ec0.json'), scope
     )
@@ -52,7 +55,7 @@ def main():
         sheet.update_cells(cells_list)
         sheet.update_acell('C' + str(int(r) + 1), f'=SUM(C{cursor}:C{str(r)})')
         sheet.update_acell('D' + str(int(r) + 1), f'=SUM(D{cursor}:D{str(r)})')
-        kassa_total_cell = 'E' + str(int(r)+1)
+        kassa_total_cell = 'E' + str(int(r) + 1)
         sheet.update_acell(kassa_total_cell, f'=SUM(E{cursor}:E{str(r)})')
         totals.append(kassa_total_cell)
         cursor += 1
@@ -64,5 +67,8 @@ def main():
 
     return "Таблица успешно обновлена: {time}".format(time=datetime.datetime.now().ctime())
 
+
 if __name__ == '__main__':
+    django.setup()
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DNZ144.settings')
     main()
