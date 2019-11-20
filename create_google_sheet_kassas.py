@@ -27,6 +27,7 @@ def main():
     client = gspread.authorize(creds)
     sheet = client.open('Names').worksheet('tests')
     cursor = 1
+    totals = []
 
     for kassa in Kassa.objects.all():
         sheet.update_acell('A' + str(cursor), str(kassa))
@@ -49,12 +50,14 @@ def main():
             cells_list.append(Cell(row + cursor, 5, float(balance['balance'])))
             row += 1
         sheet.update_cells(cells_list)
-        sheet.update_acell('C' + str(int(r) + 1), f'=SUM(C{cursor}:E{str(r)})')
-        sheet.update_acell('D' + str(int(r) + 1), f'=SUM(D{cursor}:E{str(r)})')
-        sheet.update_acell('E' + str(int(r)+1), f'=SUM(E{cursor}:E{str(r)})')
+        sheet.update_acell('C' + str(int(r) + 1), f'=SUM(C{cursor}:C{str(r)})')
+        sheet.update_acell('D' + str(int(r) + 1), f'=SUM(D{cursor}:D{str(r)})')
+        kassa_total_cell = 'E' + str(int(r)+1)
+        sheet.update_acell(kassa_total_cell, f'=SUM(E{cursor}:E{str(r)})')
+        totals.append(kassa_total_cell)
         cursor += 1
         cursor += row
-    sheet.update_acell('E' + str(cursor + 1), f'=SUM(E1:E{str(cursor - 1)})')
+    sheet.update_acell('E' + str(cursor + 1), f"=SUM({','.join(totals)})")
 
 if __name__ == '__main__':
     main()
