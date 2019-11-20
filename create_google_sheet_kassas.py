@@ -1,7 +1,7 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import os
-import time
+import datetime
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DNZ144.settings')
 import django
@@ -25,11 +25,11 @@ def main():
         os.path.join(settings.BASE_DIR, 'DNZ144-c13c1ab86ec0.json'), scope
     )
     client = gspread.authorize(creds)
-    sheet = client.open('Names').worksheet('tests')
-    cursor = 1
+    sheet = client.open('Harvest').worksheet('Поступления')
+    cursor = 2
     totals = []
 
-    for kassa in Kassa.objects.all():
+    for kassa in Kassa.objects.filter(is_active=True):
         sheet.update_acell('A' + str(cursor), str(kassa))
         cursor += 1
         r = str(cursor)
@@ -57,7 +57,12 @@ def main():
         totals.append(kassa_total_cell)
         cursor += 1
         cursor += row
-    sheet.update_acell('E' + str(cursor + 1), f"=SUM({','.join(totals)})")
+    sheet.update_acell('G1', 'Последнее обновление:')
+    sheet.update_acell('H1', str(datetime.datetime.now().replace(second=0, microsecond=0)))
+    sheet.update_acell('G2', 'Общий баланс по фондам:')
+    sheet.update_acell('H2', f"=SUM({','.join(totals)})")
+
+    return "Таблица успешно обновлена: {time}".format(time=datetime.datetime.now().ctime())
 
 if __name__ == '__main__':
     main()
