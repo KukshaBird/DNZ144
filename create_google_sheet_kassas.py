@@ -9,9 +9,13 @@ from gspread.models import Cell
 from oauth2client.service_account import ServiceAccountCredentials
 # Django
 import django
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DNZ144.settings')
+django.setup()
 from django.conf import settings
 # Models
 from accounting.models import Kassa
+
+
 
 
 def main():
@@ -28,7 +32,7 @@ def main():
         os.path.join(settings.BASE_DIR, 'DNZ144-c13c1ab86ec0.json'), scope
     )
     client = gspread.authorize(creds)
-    sheet = client.open('Harvest').worksheet('Поступления')
+    sheet = client.open('Names').worksheet('tests')
     cursor = 2
     totals = []
 
@@ -69,6 +73,5 @@ def main():
 
 
 if __name__ == '__main__':
-    django.setup()
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DNZ144.settings')
+
     main()
