@@ -33,6 +33,7 @@ class ApiUser(AbstractUser):
 		balance = 0
 		if len(self.get_group_list()) > 0:
 			for kassa in Kassa.objects.filter(group=self.get_group_list()[0]):
+				#TODO: KID FIRST???
 				if kassa.kid_balance(self.kids.first()):
 					balance += kassa.kid_balance(self.kids.first())['balance']
 			return balance
