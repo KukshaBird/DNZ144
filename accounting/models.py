@@ -36,27 +36,13 @@ class Kassa(models.Model):
 		elif deb: return deb
 		else: return 0
 
-	def withdraw(self, amount, user):
-		# withdraw from each kid balance
-		kids_list = self.group.kids.all()
-		avg_sum = round(amount / len(kids_list), 2)
-		for kid in kids_list:
-			self.operations.create(
-					kid = kid,
-					kassa = self,
-					amount = avg_sum,
-					trans_type = 'CRE',
-					user = user,
-				)
-		return True
-
 	def kids_paid(self):
 		kids_paid = [kid[0] for kid in self.operations.filter(trans_type="DEB").values_list('kid')]
 		return kids_paid
 
 	def kid_balance(self, kid):
-		cre = self.operations.filter(trans_type="CRE", kid=kid).aggregate(Sum('amount'))['amount__sum']
-		deb = self.operations.filter(trans_type="DEB",kid=kid).aggregate(Sum('amount'))['amount__sum']
+		cre = self.operations.filter(kassa__is_charity=False, trans_type="CRE", kid=kid).aggregate(Sum('amount'))['amount__sum']
+		deb = self.operations.filter(kassa__is_charity=False, trans_type="DEB",kid=kid).aggregate(Sum('amount'))['amount__sum']
 		if deb and cre:
 			return {'cre': cre, 'deb': deb, 'balance': deb - cre}
 		elif deb:

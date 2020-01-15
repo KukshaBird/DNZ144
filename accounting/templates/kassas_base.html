@@ -5,7 +5,7 @@
 	<ul class="nav nav-pills nav-fill">
 		<a class="nav-item nav-link" href="{% url 'accounting:kassas_list' %}">Открытые фонды</a>
 		<a class="nav-item nav-link" href="{% url 'accounting:kassas_closed_list' %}">Закрытые фонды</a>
-		<a class="nav-item nav-link disabled" href="#">Благотворительность</a>
+		<a class="nav-item nav-link" href="{% url 'accounting:kassas_charity_list' %}">Благотворительность</a>
 	</ul>
 </nav>
 <div class="container">

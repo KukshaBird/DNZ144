@@ -1,0 +1,17 @@
+{% extends 'kassas_base.html' %}
+
+{% block kassas_block %}
+	<h1>Благотворительность</h1>
+	<br/>
+	{% for kassa in kassa_list %}
+	<div class="card mb-3">
+		<div class="card-body">
+			<h5 class="card-title">
+				<a href="{% url 'accounting:kassas_details' pk=kassa.pk %}">Фонд: {{ kassa.name }}</a>
+			</h5>
+			<p class="card-text">{{ kassa.descripton }}</p>
+			<p class="card-text">Остаток: {{ kassa.get_saldo|floatformat:2 }}</p>
+		</div>
+	</div>
+	{% endfor %}
+{% endblock %}

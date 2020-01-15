@@ -38,7 +38,7 @@ class KassaListView(LoginRequiredMixin, ListView):
         # TODO: create list of groups.
         queryset = (Group.objects.
                     get(pk=self.request.user.get_group_list()[0].pk).
-                    kassas.filter(is_active=True).
+                    kassas.filter(is_active=True, is_charity=False).
                     order_by('-create_date'))
         return queryset
 
@@ -63,6 +63,29 @@ class KassaClosedListView(LoginRequiredMixin, ListView):
         queryset = (Group.objects.
                     get(pk=self.request.user.get_group_list()[0].pk).
                     kassas.filter(is_active=False).
+                    order_by('-create_date'))
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        total_sum = sum([kassa.get_saldo() for kassa in Group.objects.get(pk=self.request.user.get_group_list()[
+            0].pk).kassas.all()]) if self.request.user.get_group_list() else "Нет доступа к группам"
+        context['total_sum'] = total_sum
+        return context
+
+
+class KassaCharityListView(LoginRequiredMixin, ListView):
+    model = Kassa
+    template_name = 'kassas_charity_list.html'
+    redirect_field_name = 'accounts:login'
+
+    def get_queryset(self):
+        if not self.request.user.has_group():
+            return None
+        # TODO: create list of groups.
+        queryset = (Group.objects.
+                    get(pk=self.request.user.get_group_list()[0].pk).
+                    kassas.filter(is_active=True, is_charity=True).
                     order_by('-create_date'))
         return queryset
 
@@ -110,7 +133,8 @@ def withdraw_submit(request):
     if form.is_valid():
         form = form.cleaned_data
         kassa = form['from_kassa']
-        kassa.withdraw(form['amount'], ApiUser.objects.get(id=request.user.id))
+        withdraw(kassa, form['amount'], user=ApiUser.objects.get(id=request.user.id))
+        # kassa.withdraw(form['amount'], ApiUser.objects.get(id=request.user.id))
         return JsonResponse(response_data)
 
 
