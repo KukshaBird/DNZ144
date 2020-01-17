@@ -35,12 +35,12 @@ def main():
     sheet = client.open('Names').worksheet('tests')
     cursor = 2
     totals = []
-    for kassa in Kassa.objects.filter(is_active=True)[:2]:
-        sheet.update_acell('A' + str(cursor), str(kassa))     
+    for kassa in Kassa.objects.filter(is_active=True):
+        sheet.update_acell('A' + str(cursor), str(kassa))  
+        cursor += 1   
         #  ONLY for 'Общий сбор'
         if kassa.name == 'Общий сбор':
             row = 1
-            cursor += 1
             today = datetime.date.today()
             start = kassa.create_date - datetime.timedelta(days=365)
             months = today
@@ -85,6 +85,7 @@ def main():
             totals.append('E' + str(kassa_total_cell.row))
             sheet.update_cells(cells_list)
             cursor += row + 2
+            continue
         row = 1
         r = str(cursor)
         sheet.update_acell('A' + r, '#')
