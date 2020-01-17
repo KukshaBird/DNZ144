@@ -35,26 +35,73 @@ def main():
     sheet = client.open('Names').worksheet('tests')
     cursor = 2
     totals = []
-
-    for kassa in Kassa.objects.filter(is_active=True):
-        sheet.update_acell('A' + str(cursor), str(kassa))
-        cursor += 1
+    for kassa in Kassa.objects.filter(is_active=True)[:2]:
+        sheet.update_acell('A' + str(cursor), str(kassa))     
+        #  ONLY for 'Общий сбор'
+        if kassa.name == 'Общий сбор':
+            row = 1
+            cursor += 1
+            today = datetime.date.today()
+            start = kassa.create_date - datetime.timedelta(days=365)
+            months = today
+            step = 0
+            months_list = []
+            if today > start:
+                while months >= start and step < 30:
+                    step += 1
+                    months_list.append("{}-{}".format(months.month, months.year))
+                    if months.month <= 1:
+                        months = months.replace(year=months.year - 1, month=12)
+                        continue
+                    months = months.replace(month=months.month - 1)
+            months_list = months_list[::-1]
+            cells_first_row = [Cell(cursor, i + 3, months_list[i]) for i in range(len(months_list))]
+            sheet.update_cells(cells_first_row)
+            cells_list = []
+            for kid in kassa.group.kids.all():
+                balance = float(kassa.kid_balance(kid)['balance'])
+                withdraws = []
+                for i in range(len(months_list)):
+                    if i == 0:
+                        if balance >= 50:
+                            withdraws.append(50)
+                        else:
+                            withdraws.append(balance - 50)
+                        balance -= 50
+                    if balance >= 100:
+                        withdraws.append(100)
+                    else:
+                        withdraws.append(balance - 100)
+                    balance -= 100
+                r_cell = row + cursor
+                cells_list.append(Cell(r_cell, 1, int(row)))
+                cells_list.append(Cell(r_cell, 2, kid.last_name))
+                for i in range(len(months_list)):
+                    cells_list.append(Cell(row + cursor, i + 3, withdraws[i]))
+                row += 1
+            # rows = len(kassa.group.kids.all())
+            kassa_total_cell = Cell(cursor + row, 5, float(kassa.get_saldo()))
+            cells_list.append(kassa_total_cell)
+            totals.append('E' + str(kassa_total_cell.row))
+            sheet.update_cells(cells_list)
+            cursor += row + 2
+        row = 1
         r = str(cursor)
         sheet.update_acell('A' + r, '#')
         sheet.update_acell('B' + r, 'Фамилия')
         sheet.update_acell('C' + r, 'Поступление')
         sheet.update_acell('D' + r, 'Снятие')
         sheet.update_acell('E' + r, 'Баланс')
-        row = 1
         cells_list = []
         for kid in kassa.group.kids.all():
             r = str(row + cursor)
             balance = kassa.kid_balance(kid)
-            cells_list.append(Cell(row + cursor, 1, float(row)))
-            cells_list.append(Cell(row + cursor, 2, kid.last_name))
-            cells_list.append(Cell(row + cursor, 3, float(balance['deb'])))
-            cells_list.append(Cell(row + cursor, 4, float(balance['cre'])))
-            cells_list.append(Cell(row + cursor, 5, float(balance['balance'])))
+            r_cell = row + cursor
+            cells_list.append(Cell(r_cell, 1, int(row)))
+            cells_list.append(Cell(r_cell, 2, kid.last_name))
+            cells_list.append(Cell(r_cell, 3, float(balance['deb'])))
+            cells_list.append(Cell(r_cell, 4, float(balance['cre'])))
+            cells_list.append(Cell(r_cell, 5, float(balance['balance'])))
             row += 1
         sheet.update_cells(cells_list)
         sheet.update_acell('C' + str(int(r) + 1), f'=SUM(C{cursor}:C{str(r)})')
@@ -62,7 +109,7 @@ def main():
         kassa_total_cell = 'E' + str(int(r) + 1)
         sheet.update_acell(kassa_total_cell, f'=SUM(E{cursor}:E{str(r)})')
         totals.append(kassa_total_cell)
-        cursor += 1
+        cursor += 2
         cursor += row
     sheet.update_acell('G1', 'Последнее обновление:')
     sheet.update_acell('H1', str(datetime.datetime.now().replace(second=0, microsecond=0)))
