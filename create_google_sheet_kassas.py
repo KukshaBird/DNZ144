@@ -32,7 +32,7 @@ def main():
         os.path.join(settings.BASE_DIR, 'DNZ144-c13c1ab86ec0.json'), scope
     )
     client = gspread.authorize(creds)
-    sheet = client.open('Names').worksheet('tests')
+    sheet = client.open('Harvest').worksheet('Поступления')
     cursor = 2
     totals = []
     for kassa in Kassa.objects.filter(is_active=True):
@@ -41,12 +41,12 @@ def main():
         #  ONLY for 'Общий сбор'
         if kassa.name == 'Общий сбор':
             row = 1
-            today = datetime.date.today()
-            start = kassa.create_date - datetime.timedelta(days=365)
-            months = today
+            end_date = datetime.date(2020, 6, 1)
+            start = datetime.date(2019, 10, 1)
+            months = end_date
             step = 0
             months_list = []
-            if today > start:
+            if end_date > start:
                 while months >= start and step < 30:
                     step += 1
                     months_list.append("{}-{}".format(months.month, months.year))
@@ -59,25 +59,25 @@ def main():
             sheet.update_cells(cells_first_row)
             cells_list = []
             for kid in kassa.group.kids.all():
-                balance = float(kassa.kid_balance(kid)['balance'])
+                balance = float(kassa.kid_balance(kid)['deb'])
                 withdraws = []
                 for i in range(len(months_list)):
                     if i == 0:
                         if balance >= 50:
                             withdraws.append(50)
                         else:
-                            withdraws.append(balance - 50)
+                            withdraws.append(balance)
                         balance -= 50
                     if balance >= 100:
                         withdraws.append(100)
                     else:
-                        withdraws.append(balance - 100)
+                        withdraws.append(balance)
                     balance -= 100
                 r_cell = row + cursor
                 cells_list.append(Cell(r_cell, 1, int(row)))
                 cells_list.append(Cell(r_cell, 2, kid.last_name))
                 for i in range(len(months_list)):
-                    cells_list.append(Cell(row + cursor, i + 3, withdraws[i]))
+                    cells_list.append(Cell(r_cell, i + 3, withdraws[i]))
                 row += 1
             # rows = len(kassa.group.kids.all())
             kassa_total_cell = Cell(cursor + row, 5, float(kassa.get_saldo()))
