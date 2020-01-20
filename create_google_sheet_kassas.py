@@ -3,19 +3,22 @@ Module contain script for regular filling google sheet with operations data for 
 """
 import datetime
 import os
-# GoogleAPI
+#  GoogleAPI
 import gspread
 from gspread.models import Cell
 from oauth2client.service_account import ServiceAccountCredentials
-# Django
+#  Django
 import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DNZ144.settings')
 django.setup()
 from django.conf import settings
-# Models
+#  ENV
+import environ
+#  Models
 from accounting.models import Kassa
 
-
+env = environ.Env()
+environ.Env.read_env('dnz.env')
 
 
 def main():
@@ -32,7 +35,7 @@ def main():
         os.path.join(settings.BASE_DIR, 'DNZ144-c13c1ab86ec0.json'), scope
     )
     client = gspread.authorize(creds)
-    sheet = client.open('Harvest').worksheet('Поступления')
+    sheet = client.open(env('SPREADSHEET')).worksheet(env("SHEET"))
     cursor = 2
     totals = []
     for kassa in Kassa.objects.filter(is_active=True):
@@ -65,14 +68,20 @@ def main():
                     if i == 0:
                         if balance >= 50:
                             withdraws.append(50)
-                        else:
+                            balance -= 50
+                        elif balance > 0 and balance < 100:
                             withdraws.append(balance)
-                        balance -= 50
+                            balance -= balance
+                        elif balance == 0:
+                            withdraws.append(0)
                     if balance >= 100:
                         withdraws.append(100)
-                    else:
+                        balance -= 100
+                    elif balance > 0 and balance < 100:
                         withdraws.append(balance)
-                    balance -= 100
+                        balance -= balance
+                    elif balance == 0:
+                        withdraws.append(0)
                 r_cell = row + cursor
                 cells_list.append(Cell(r_cell, 1, int(row)))
                 cells_list.append(Cell(r_cell, 2, kid.last_name))
