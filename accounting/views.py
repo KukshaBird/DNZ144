@@ -133,7 +133,9 @@ def withdraw_submit(request):
     if form.is_valid():
         form = form.cleaned_data
         kassa = form['from_kassa']
-        withdraw(kassa, form['amount'], user=ApiUser.objects.get(id=request.user.id))
+        withdraw(kassa, form['amount'],
+                 user=ApiUser.objects.get(id=request.user.id),
+                 comment=form.get('comment', None))
         # kassa.withdraw(form['amount'], ApiUser.objects.get(id=request.user.id))
         return JsonResponse(response_data)
 

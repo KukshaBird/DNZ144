@@ -15,6 +15,7 @@ class CreateTransferForm(forms.Form):
 class CreateWithdrawForm(forms.Form):
 	from_kassa = forms.ModelChoiceField(queryset=Kassa.objects.all(), empty_label=None)
 	amount = forms.DecimalField(max_digits=7, decimal_places=2)
+	comment = forms.CharField(max_length=120, required=False)
 
 
 

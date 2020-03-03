@@ -129,7 +129,7 @@ def trans_func(from_k, to_k, responsible_user, amount):
     raise ValueError()
 
 
-def withdraw(kassa, amount, user):
+def withdraw(kassa, amount, user, comment):
     if not kassa.is_charity:
         # withdraw from each kid balance
         kids_list = kassa.group.kids.all()
@@ -141,6 +141,7 @@ def withdraw(kassa, amount, user):
                 amount=avg_sum,
                 trans_type='CRE',
                 user=user,
+                comment=comment,
             )
         return True
     if kassa.is_charity:
@@ -153,6 +154,7 @@ def withdraw(kassa, amount, user):
                 amount=avg_sum,
                 trans_type='CRE',
                 user=user,
+                comment=comment,
             )
         return True
     raise ValueError()
