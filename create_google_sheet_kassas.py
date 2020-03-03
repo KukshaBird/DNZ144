@@ -38,7 +38,7 @@ def main():
     sheet = client.open(env('SPREADSHEET')).worksheet(env("SHEET"))
     cursor = 2
     totals = []
-    for kassa in Kassa.objects.filter(is_active=True):
+    for kassa in Kassa.objects.filter(is_active=True, is_charity=False):
         sheet.update_acell('A' + str(cursor), str(kassa))  
         cursor += 1   
         #  ONLY for 'Общий сбор'
