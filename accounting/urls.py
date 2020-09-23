@@ -14,4 +14,5 @@ urlpatterns = [
 	path('kassas/withdraw_submit', views.withdraw_submit, name='withdraw_submit'),
 	path('kassas/withdraw', views.create_withdraw, name='create_withdraw'),
 	path('kassas/transfer', views.create_transfer, name='create_transfer'),
+	path('kassas/update_tables', views.refresh_table, name='refresh_table'),
 ]

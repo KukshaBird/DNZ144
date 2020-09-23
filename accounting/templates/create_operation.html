@@ -8,11 +8,12 @@
 	<form method="POST" id="operation-form">
 		{% csrf_token %}
 		{{ form|crispy }}
-		<input class="btn btn-warning" type="submit" name="submit">	
+		<input class="btn btn-warning" type="submit" name="submit">
 	</form>
 
 	<a href="{% url 'accounting:create_withdraw' %}"><button class="btn btn-danger">Списать средства</button></a>
 	<a href="{% url 'accounting:create_transfer' %}"><button class="btn btn-warning">Перекинуть балансы</button></a>
+	<a href="{% url 'accounting:refresh_table' %}"><button class="btn btn-warning">Обновить таблицу.</button></a>
 {% endif %}
 {% endblock %}
 
@@ -32,7 +33,7 @@
 	        },
 	        error:  function(response) {
 	        	alert("Операция не удалась!")
-	        }                 
+	        }
 	    });
 	    return false;
 	});

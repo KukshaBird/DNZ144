@@ -126,6 +126,13 @@ def create_transfer(request):
     return render(request, 'create_transfer.html', context={'form': form})
 
 
+@login_required
+def refresh_table(request):
+    import create_google_sheet_kassas as refrash
+    refrash.main()
+    return render("Refreshed.")
+
+
 @require_http_methods(["POST"])
 def withdraw_submit(request):
     response_data = {}
