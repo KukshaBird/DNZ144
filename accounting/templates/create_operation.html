@@ -13,7 +13,7 @@
 
 	<a href="{% url 'accounting:create_withdraw' %}"><button class="btn btn-danger">Списать средства</button></a>
 	<a href="{% url 'accounting:create_transfer' %}"><button class="btn btn-warning">Перекинуть балансы</button></a>
-	<a href="{% url 'accounting:refresh_table' %}"><button class="btn btn-warning">Обновить таблицу.</button></a>
+	<button id="update_table" class="btn btn-warning">Обновить таблицу</button>
 {% endif %}
 {% endblock %}
 
@@ -36,6 +36,22 @@
 	        }
 	    });
 	    return false;
+	});
+	$('#update_table').click(function(){
+			$.ajax({
+					type: "GET",
+					url: "{% url 'accounting:refresh_table' %}",
+					// dataType: "json",
+					async: true,
+					// data: $(this).serialize(),
+					success: function(response) {
+							alert('Процесс запущен.');
+					},
+					error:  function(response) {
+						alert("Операция не удалась!")
+					}
+			});
+			return false;
 	});
 </script>
 {% endblock %}
