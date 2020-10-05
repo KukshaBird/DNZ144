@@ -63,7 +63,7 @@ def main():
             sheet.update_cells(cells_first_row)
             cells_list = []
             for kid in kassa.group.kids.all():
-                balance = float(kassa.kid_balance(kid)['deb'])
+                balance = float(kassa.kid_balance(kid, datetime.datetime(2020, 9, 1))['deb'])
                 withdraws = []
                 for i in range(len(months_list)):
                     if balance >= 100:
