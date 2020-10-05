@@ -9,6 +9,7 @@ from gspread.models import Cell
 from oauth2client.service_account import ServiceAccountCredentials
 #  Django
 import django
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DNZ144.settings')
 django.setup()
 from django.conf import settings
@@ -39,13 +40,13 @@ def main():
     cursor = 2
     totals = []
     for kassa in Kassa.objects.filter(is_active=True, is_charity=False):
-        sheet.update_acell('A' + str(cursor), str(kassa))  
-        cursor += 1   
+        sheet.update_acell('A' + str(cursor), str(kassa))
+        cursor += 1
         #  ONLY for 'Общий сбор'
         if kassa.name == 'Общий сбор':
             row = 1
-            end_date = datetime.date(2020, 6, 1)
-            start = datetime.date(2019, 10, 1)
+            end_date = datetime.date(2021, 6, 1)
+            start = datetime.date(2020, 10, 1)
             months = end_date
             step = 0
             months_list = []
@@ -65,19 +66,10 @@ def main():
                 balance = float(kassa.kid_balance(kid)['deb'])
                 withdraws = []
                 for i in range(len(months_list)):
-                    if i == 0:
-                        if balance >= 50:
-                            withdraws.append(50)
-                            balance -= 50
-                        elif balance > 0 and balance < 100:
-                            withdraws.append(balance)
-                            balance -= balance
-                        elif balance == 0:
-                            withdraws.append(0)
                     if balance >= 100:
                         withdraws.append(100)
                         balance -= 100
-                    elif balance > 0 and balance < 100:
+                    elif 0 < balance < 100:
                         withdraws.append(balance)
                         balance -= balance
                     elif balance == 0:
@@ -130,5 +122,4 @@ def main():
 
 
 if __name__ == '__main__':
-
     main()
