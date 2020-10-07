@@ -128,8 +128,8 @@ def create_transfer(request):
 
 @login_required
 def refresh_table(request):
-    import create_google_sheet_kassas as refrash
-    refrash.main()
+    import create_google_sheet_kassas as refresh
+    refresh.main()
     return render("Refreshed.")
 
 

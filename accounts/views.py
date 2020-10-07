@@ -1,15 +1,13 @@
-from django.contrib.auth import login, logout
-from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, DetailView, UpdateView
-from django.http import HttpResponseRedirect
+from django.contrib.auth import logout
 from django.contrib.auth.views import (LoginView, PasswordResetView,
                                        PasswordResetConfirmView,
                                        PasswordResetCompleteView)
-
-from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy, reverse
+from django.views.generic import CreateView, DetailView, UpdateView
+from django.db.models.signals import post_save
 
 from . import forms
-
 from . import models
 
 
@@ -49,14 +47,17 @@ class ProfileUpdateView(UpdateView):
     model = models.ApiUser
     template_name = 'accounts/update.html'
 
+
 class UserPasswordResetView(PasswordResetView):
     success_url = reverse_lazy("home")
     template_name = "accounts/reset_pass.html"
     email_template_name = "accounts/password_reset_email.html"
 
+
 class UserPasswordResetConfirmView(PasswordResetConfirmView):
     template_name = "accounts/reset.html"
     success_url = reverse_lazy("accounts:password_reset_complete")
+
 
 class UserPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = "accounts/password_reset_complete.html"
