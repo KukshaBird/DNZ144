@@ -59,6 +59,24 @@ class Kassa(models.Model):
         else:
             return {'cre': 0, 'deb': 0, 'balance': 0}
 
+    def transfer_to_account(self, amount: float, kid: Kid):
+        kid.kid_balance.charge_balance(amount)
+        Operation.objects.create(
+            amount=amount,
+            kassa=self,
+            kid=kid,
+            trans_type='DEB',
+        )
+
+    def transfer_from_account(self, amount: float, kid: Kid):
+        kid.kid_balance.withdraw_balance(amount)
+        Operation.objects.create(
+            amount=amount,
+            kassa=self,
+            kid=kid,
+            trans_type='CRE',
+        )
+
 
 class Operation(models.Model):
     TRANS_TYPES = {

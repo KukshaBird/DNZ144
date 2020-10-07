@@ -7,7 +7,7 @@ class KidInline(admin.TabularInline):
     model = models.Kid
 
 
-
 admin.site.register(models.Group)
 admin.site.register(models.Kid)
+admin.site.register(models.KidBalance)
 admin.site.register(models.Staff)

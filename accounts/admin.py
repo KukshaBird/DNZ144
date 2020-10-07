@@ -6,6 +6,3 @@ from . import models
 @admin.register(models.ApiUser)
 class ApiUserAdmin(admin.ModelAdmin):
     pass
-
-
-admin.site.register(models.AccountBalance)
