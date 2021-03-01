@@ -130,7 +130,7 @@ def create_transfer(request):
 def refresh_table(request):
     import create_google_sheet_kassas as refresh
     refresh.main()
-    return render("Refreshed.")
+    return JsonResponse(data={'success': True})
 
 
 @require_http_methods(["POST"])
