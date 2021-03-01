@@ -2,6 +2,7 @@
 Module contain script for regular filling google sheet with operations data for each Kassa.
 """
 import datetime
+import pytz
 import os
 #  GoogleAPI
 import gspread
@@ -114,11 +115,11 @@ def main():
         cursor += 2
         cursor += row
     sheet.update_acell('G1', 'Последнее обновление:')
-    sheet.update_acell('H1', str(datetime.datetime.now().replace(second=0, microsecond=0)))
+    sheet.update_acell('H1', str(datetime.datetime.now().replace(second=0, microsecond=0, tzinfo=pytz.UTC)))
     sheet.update_acell('G2', 'Общий баланс по фондам:')
     sheet.update_acell('H2', f"=SUM({','.join(totals)})")
 
-    return "Таблица успешно обновлена: {time}".format(time=datetime.datetime.now().ctime())
+    return "Таблица успешно обновлена: {time}".format(time=datetime.datetime.now().replace(tzinfo=pytz.UTC).ctime())
 
 
 if __name__ == '__main__':
