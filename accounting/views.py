@@ -180,7 +180,7 @@ def operation_submit(request):
     if request.is_ajax:
         if request.method == 'POST':
             data = request.POST
-            Operation.objects.get_or_create(
+            Operation.objects.create(
                 kassa=Kassa.objects.get(pk=data['kassa']),
                 kid=Kid.objects.get(pk=data['kid']),
                 amount=data['amount'],
