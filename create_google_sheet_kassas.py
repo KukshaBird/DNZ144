@@ -46,8 +46,8 @@ def main():
         #  ONLY for 'Общий сбор'
         if kassa.name == 'Общий сбор':
             row = 1
-            end_date = datetime.date(2021, 6, 1)
-            start = datetime.date(2020, 10, 1)
+            end_date = datetime.date(2022, 6, 1)
+            start = datetime.date(2021, 9, 1)
             months = end_date
             step = 0
             months_list = []
@@ -64,7 +64,7 @@ def main():
             sheet.update_cells(cells_first_row)
             cells_list = []
             for kid in kassa.group.kids.all():
-                balance = float(kassa.kid_balance(kid, datetime.datetime(2020, 9, 1))['deb'])
+                balance = float(kassa.kid_balance(kid, datetime.datetime(2021, 9, 1))['deb'])
                 withdraws = []
                 for i in range(len(months_list)):
                     if balance >= 100:
@@ -82,7 +82,7 @@ def main():
                     cells_list.append(Cell(r_cell, i + 3, withdraws[i]))
                 row += 1
             # rows = len(kassa.group.kids.all())
-            kassa_total_cell = Cell(cursor + row, 5, float(kassa.get_saldo()))
+            kassa_total_cell = Cell(cursor + row, 5, float(kassa.get_saldo_from(start)))
             cells_list.append(kassa_total_cell)
             totals.append('E' + str(kassa_total_cell.row))
             sheet.update_cells(cells_list)

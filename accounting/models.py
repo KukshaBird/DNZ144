@@ -28,10 +28,17 @@ class Kassa(models.Model):
         return self.operations.filter(trans_type="DEB").aggregate(Sum('amount'))['amount__sum']
 
     def get_saldo(self):
-        # cre = self.get_cre_sum()
-        # deb = self.get_deb_sum()
         cre = self.operations.filter(trans_type="CRE").aggregate(Sum('amount'))['amount__sum']
         deb = self.operations.filter(trans_type="DEB").aggregate(Sum('amount'))['amount__sum']
+        return self._get_saldo(deb, cre)
+
+    def get_saldo_from(self, date_from):
+        cre = self.operations.filter(trans_type="CRE", create_date__gte=date_from).aggregate(Sum('amount'))['amount__sum']
+        deb = self.operations.filter(trans_type="DEB", create_date__gte=date_from).aggregate(Sum('amount'))['amount__sum']
+        return self._get_saldo(deb, cre)
+
+    @staticmethod
+    def _get_saldo(deb, cre):
         if deb and cre:
             return deb - cre
         elif deb:
